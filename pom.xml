@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mastercloudapps</groupId>
-	<artifactId>twitter-scheduler</artifactId>
+	<artifactId>twitter-scheduler-dev</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>twitter-scheduler</name>
+	<name>twitter-scheduler-dev</name>
 	<description>MasterCloudApps TFM project for scheduling tweets</description>
 	
 	<properties>
