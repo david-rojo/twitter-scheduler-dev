@@ -1,9 +1,9 @@
-name: Master branch push
+name: Main branch push
 
 on: 
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
