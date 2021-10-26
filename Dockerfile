@@ -1,7 +1,7 @@
 FROM openjdk:11-jre
 
-ARG  OPENAPI_USER=xxx
-ARG  OPENAPI_PASSWORD=xxx
+ARG  API_USERNAME=xxx
+ARG  API_PASSWORD=xxx
 
 COPY target/*.jar /opt/webapp.jar
 

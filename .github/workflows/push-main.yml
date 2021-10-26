@@ -1,9 +1,9 @@
-name: Main branch push
+name: Master branch push v1 version
 
 on: 
-  #push:
-  #  branches:
-  #    - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -11,6 +11,9 @@ jobs:
   run_tests_build_app:
     name: Run tests and build app
     runs-on: ubuntu-20.04
+    env:
+      OPENAPI_USER: ${{ secrets.OPENAPI_USER }}
+      OPENAPI_PASSWORD: ${{ secrets.OPENAPI_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -72,22 +75,21 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [run_tests_build_app]
     env:
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
-      - name: Heroku deploy
-        uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Download jar from previous job
+        uses: actions/download-artifact@v2
         with:
-          heroku_api_key: $HEROKU_API_KEY
-          heroku_app_name: $HEROKU_APP_NAME
-          heroku_email: $HEROKU_EMAIL
-          usedocker: true
-          docker_build_args: |
-            OPENAPI_USER
-            OPENAPI_PASSWORD
-        env:
-          OPENAPI_USER: ${{ secrets.OPENAPI_USER }}
-          OPENAPI_PASSWORD: ${{ secrets.OPENAPI_PASSWORD }}
+          name: target
+          path: target
+      - name: Heroku Container Registry login
+        run: heroku container:login 
+      - name: Build and push
+        run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=$API_USERNAME,API_PASSWORD=$API_PASSWORD
+      - name: Release
+        run: heroku container:release -a $HEROKU_APP_NAME web
