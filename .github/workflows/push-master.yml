@@ -23,7 +23,16 @@ jobs:
       - name: Run Unitary tests
         run: mvn test
       - name: Build native with Maven
-        run: mvn -B package
+        run: |
+          echo "OPENAPI_USER env var:  "
+          echo $OPENAPI_USER
+          echo "OPENAPI_PASSWORD env var:  "
+          echo $OPENAPI_PASSWORD
+          echo "secrets.OPENAPI_USER env var:  "
+          echo ${{ secrets.OPENAPI_USER }}
+          echo "secrets.OPENAPI_PASSWORD env var:  "
+          echo ${{ secrets.OPENAPI_PASSWORD }}
+          mvn -B package
       - name: Upload jar for next job
         uses: actions/upload-artifact@v2
         with:
