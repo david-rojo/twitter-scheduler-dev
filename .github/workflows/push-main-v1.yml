@@ -82,6 +82,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+      - name: Download jar from previous job
+        uses: actions/download-artifact@v2
+        with:
+          name: target
+          path: target
       - name: Heroku Container Registry login
         run: heroku container:login 
       - name: Build and push
