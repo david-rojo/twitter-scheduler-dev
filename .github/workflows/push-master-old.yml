@@ -1,4 +1,4 @@
-name: Master branch push
+name: Master branch push old version
 
 on: 
 #  push:
