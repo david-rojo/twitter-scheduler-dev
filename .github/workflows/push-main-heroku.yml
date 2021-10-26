@@ -72,6 +72,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [run_tests_build_app]
     env:
+      IMAGE_NAME: twitter-scheduler-tfm-dev
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
@@ -84,10 +85,6 @@ jobs:
           heroku_api_key: $HEROKU_API_KEY
           heroku_app_name: $HEROKU_APP_NAME
           heroku_email: $HEROKU_EMAIL
-          usedocker: true
-          docker_build_args: |
-            OPENAPI_USER
-            OPENAPI_PASSWORD
         env:
-          OPENAPI_USER: ${{ secrets.OPENAPI_USER }}
-          OPENAPI_PASSWORD: ${{ secrets.OPENAPI_PASSWORD }}
+          HD_OPENAPI_USER: ${{ secrets.OPENAPI_USER }}
+          HD_OPENAPI_PASSWORD: ${{ secrets.OPENAPI_PASSWORD }}
