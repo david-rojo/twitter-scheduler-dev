@@ -87,6 +87,6 @@ jobs:
       - name: Heroku Container Registry login
         run: heroku container:login 
       - name: Build and push
-        run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=$API_USERNAME,API_PASSWORD=$API_PASSWORD
+        run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=${{ secrets.API_USERNAME }},API_PASSWORD=${{ secrets.API_PASSWORD }}
       - name: Release
         run: heroku container:release -a $HEROKU_APP_NAME web
