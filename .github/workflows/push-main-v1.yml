@@ -3,7 +3,7 @@ name: Master branch push v1 version
 on: 
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
