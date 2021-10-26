@@ -27,7 +27,7 @@ public class IndexApiController {
 	@GetMapping
 	public ResponseEntity<String> getIndex() {
 
-		log.info("user: " + user + ", password: " + password);
+		log.info("-->user: " + user + ", password: " + password);
 		return new ResponseEntity<>("Hello from TwitterScheduler app!", HttpStatus.OK);
 	}
 }
