@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "6c2b586b-2fae-441a-8067-ed9cf9ede631",
+		"name": "TwitterScheduler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pending",
+			"item": [
+				{
+					"name": "get pending tweets",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pending",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get pending tweet",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pending/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pending",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create pending tweet",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/pending/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pending",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete pending tweet",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/pending/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pending",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tweets",
+			"item": [
+				{
+					"name": "get tweets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tweets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tweets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get tweet",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tweets/5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tweets",
+								"5"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "username",
+			"value": "admin"
+		},
+		{
+			"key": "password",
+			"value": "admin1"
+		}
+	]
+}
