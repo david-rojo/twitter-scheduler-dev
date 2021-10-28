@@ -20,11 +20,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/twitter-scheduler-api/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+		http
+			.csrf().disable()
+			.authorizeRequests()
+    			//.antMatchers("/swagger-ui/**", "/twitter-scheduler-api/**", "/api/**")
+				.antMatchers("/swagger-ui/**", "/api/**")
+    		.permitAll()
+    		.anyRequest().authenticated()
+    		.and()
+    		.httpBasic();
     }
 
     @Override
