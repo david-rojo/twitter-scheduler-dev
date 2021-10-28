@@ -70,11 +70,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/pending",
+							"raw": "{{baseUrl}}/api/pending",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"pending"
 							]
 						}
@@ -102,11 +103,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/pending/10",
+							"raw": "{{baseUrl}}/api/pending/10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"pending",
 								"10"
 							]
@@ -134,15 +136,23 @@
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"string\",\n  \"images\": [\n    {\n      \"url\": \"string\"\n    }\n  ],\n  \"publicationDate\": \"2021-10-28T00:04:34.329Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{baseUrl}}/api/pending/10",
+							"raw": "{{baseUrl}}/api/pending",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"pending",
-								"10"
+								"pending"
 							]
 						}
 					},
@@ -193,11 +203,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/tweets",
+							"raw": "{{baseUrl}}/api/tweets",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"tweets"
 							]
 						}
@@ -223,11 +234,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/tweets/5",
+							"raw": "{{baseUrl}}/api/tweets/5",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"tweets",
 								"5"
 							],
