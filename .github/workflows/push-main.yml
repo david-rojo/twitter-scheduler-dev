@@ -104,7 +104,7 @@ jobs:
       - name: Generate tests
         run: mvn -B verify --no-transfer-progress
       - name: Upload coverage reports
-      - uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v2
         with:
           file: ./**/target/site/jacoco/jacoco.xml
           name: codecov
