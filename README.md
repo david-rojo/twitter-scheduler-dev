@@ -1,6 +1,8 @@
 [![License badge](https://img.shields.io/badge/license-Apache2-green.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-![][TwitterScheduler Logo]
+<p align="center">
+  <img src="https://github.com/david-rojo/twitter-scheduler-dev/blob/main/doc/images/twitter-scheduler-logo.jpg" alt="TwitterScheduler logo">
+</p>
 
 # Twitter Scheduler Dev
 
