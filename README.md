@@ -1,3 +1,7 @@
+[![License badge](https://img.shields.io/badge/license-Apache2-green.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
+![][TwitterScheduler Logo]
+
 # Twitter Scheduler Dev
 
 This is a development repository for testing of Master's Thesis <b>TwitterScheduler</b> of URJC MasterCloudApps 2020
@@ -11,3 +15,5 @@ Heroku info endpoint: [https://twitter-scheduler-tfm.herokuapp.com/actuator/info
 ## Development
 
 Heroku info endpoint: [https://twitter-scheduler-tfm-dev.herokuapp.com/actuator/info](https://twitter-scheduler-tfm-dev.herokuapp.com/actuator/info)
+
+[TwitterScheduler Logo]: doc/images/twitter-scheduler-logo.jpg
