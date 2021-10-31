@@ -103,7 +103,7 @@ jobs:
         with:
           java-version: 11
       - name: Generate coverage reports
-        run: mvn -B verify
+        run: mvn -B verify --no-transfer-progress
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2
         with:
