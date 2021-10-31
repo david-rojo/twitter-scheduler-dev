@@ -8,11 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
+import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
 
 class PendingTweetTest {
 
@@ -26,12 +31,19 @@ class PendingTweetTest {
 	}
 
 	enum MockData {
+		VALID(1L, "valid message 1", LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
+		VALID_OTHER_SAME_ID(1L, "valid message 2", LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
+		VALID_OTHER_DIFFERENT_ID(2L, "valid message 3", LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
 		INVALID_NULL_ID(null, "abc", Instant.MAX),
 		INVALID_NULL_MESSAGE(1L, null, Instant.MAX),
-		INVALID_NULL_PUBLICATION_DATE(1L, "BE-X-ID", null),
-		VALID(1L, "valid message 1", Instant.MIN),
-		VALID_OTHER_SAME_ID(1L, "valid message 2", Instant.MAX),
-		VALID_OTHER_DIFFERENT_ID(2L, "valid message 3", Instant.MAX);
+		INVALID_NULL_PUBLICATION_DATE(1L, "xyz", null),
+		INVALID_EXPIRED_PUBLICATION_DATE(1L, "asdf", LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
+		INVALID_MESSAGE_MAX_LENGTH_EXCEEDED(
+				1L,
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
+						+ "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type "
+						+ "and scrambled it to make a type specimen book. It has survived not only five years.",
+				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC));
 
 		private final Long pendingTweetId;
 
@@ -57,6 +69,13 @@ class PendingTweetTest {
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_MESSAGE));
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_PUBLICATION_DATE));
 		}
+		
+		@Test
+		@DisplayName("Test creation with domain errors, expected customized domain exceptions")
+		void testDomainExceptions() {
+			assertThrows(MessageMaxLengthExceededException.class, () -> createPendingTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));
+			assertThrows(ExpiredPublicationDateException.class, () -> createPendingTweet(MockData.INVALID_EXPIRED_PUBLICATION_DATE));
+		}
 	}
 	
 	  @Nested
@@ -81,7 +100,7 @@ class PendingTweetTest {
 	    void testEqualsText() {
 	      assertThat(pendingTweet.id().id(), is(MockData.VALID.pendingTweetId));
 	      assertThat(pendingTweet.message().message(), is(MockData.VALID.message));
-	      assertThat(pendingTweet.publicationDate(), is(MockData.VALID.publicationDate));
+	      assertThat(pendingTweet.publicationDate().instant(), is(MockData.VALID.publicationDate));
 	    }
 	  }
 	  
