@@ -92,6 +92,7 @@ jobs:
         run: heroku container:release -a $HEROKU_APP_NAME web
 
   coverage:
+    name: Coverage
     needs: [run_tests_build_app]
     runs-on: ubuntu-20.04
     steps:
@@ -101,8 +102,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Generate tests
-        run: mvn -B verify --no-transfer-progress
+      - name: Generate coverage reports
+        run: mvn jacoco:report
       - name: Upload coverage reports
         uses: codecov/codecov-action@v2
         with:
