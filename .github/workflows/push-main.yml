@@ -1,9 +1,9 @@
 name: build, test and deploy
 
 on: 
-  push:
-    branches:
-      - main
+#  push:
+#    branches:
+#      - main
   workflow_dispatch:
 
 jobs:
@@ -92,6 +92,7 @@ jobs:
         run: heroku container:release -a $HEROKU_APP_NAME web
 
   coverage:
+    name: Coverage
     needs: [run_tests_build_app]
     runs-on: ubuntu-20.04
     steps:
