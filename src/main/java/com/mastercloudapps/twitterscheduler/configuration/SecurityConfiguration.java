@@ -24,11 +24,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.authorizeRequests()
     			//.antMatchers("/swagger-ui/**", "/twitter-scheduler-api/**", "/api/**")
-				.antMatchers("/swagger-ui/**", "/api/**")
+				.antMatchers("/swagger-ui/**", "/api/**", "/h2-console/**")
     		.permitAll()
     		.anyRequest().authenticated()
     		.and()
     		.httpBasic();
+		
+		http.headers().frameOptions().disable();
     }
 
     @Override
