@@ -91,6 +91,22 @@ jobs:
       - name: Release
         run: heroku container:release -a $HEROKU_APP_NAME web
 
+  smoke_test:
+    name: Smoke test
+    runs-on: ubuntu-20.04
+    needs: [build_and_deploy_in_heroku]
+    env:
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
+      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+    steps:
+      - name: Wait
+        run: sleep 60
+      - name: Check app availability
+        uses: wei/curl@v1
+        with:
+          args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/info
+
   coverage:
     name: Coverage
     needs: [run_tests_build_app]
