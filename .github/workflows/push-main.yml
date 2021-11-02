@@ -72,8 +72,6 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [run_tests_build_app]
     env:
-      API_USERNAME: ${{ secrets.API_USERNAME }}
-      API_PASSWORD: ${{ secrets.API_PASSWORD }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     steps:
@@ -87,7 +85,6 @@ jobs:
       - name: Heroku Container Registry login
         run: heroku container:login 
       - name: Build and push
-        #run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=${{ secrets.API_USERNAME }},API_PASSWORD=${{ secrets.API_PASSWORD }}
         run: heroku container:push -a $HEROKU_APP_NAME web
       - name: Release
         run: heroku container:release -a $HEROKU_APP_NAME web
@@ -103,7 +100,7 @@ jobs:
     steps:
       - name: Wait app deployment
         run: sleep 10
-      - name: Check app availability
+      - name: Check app
         uses: wei/curl@v1
         with:
           args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/info
