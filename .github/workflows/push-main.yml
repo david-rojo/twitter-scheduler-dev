@@ -87,7 +87,8 @@ jobs:
       - name: Heroku Container Registry login
         run: heroku container:login 
       - name: Build and push
-        run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=${{ secrets.API_USERNAME }},API_PASSWORD=${{ secrets.API_PASSWORD }}
+        #run: heroku container:push -a $HEROKU_APP_NAME web --arg API_USERNAME=${{ secrets.API_USERNAME }},API_PASSWORD=${{ secrets.API_PASSWORD }}
+        run: heroku container:push -a $HEROKU_APP_NAME web
       - name: Release
         run: heroku container:release -a $HEROKU_APP_NAME web
 
@@ -101,7 +102,7 @@ jobs:
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     steps:
       - name: Wait
-        run: sleep 60
+        run: sleep 30
       - name: Check app availability
         uses: wei/curl@v1
         with:
