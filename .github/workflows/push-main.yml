@@ -101,8 +101,8 @@ jobs:
       API_PASSWORD: ${{ secrets.API_PASSWORD }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     steps:
-      - name: Wait
-        run: sleep 30
+      - name: Wait app deployment
+        run: sleep 10
       - name: Check app availability
         uses: wei/curl@v1
         with:
