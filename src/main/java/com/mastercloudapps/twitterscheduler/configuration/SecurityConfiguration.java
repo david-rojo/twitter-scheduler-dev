@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.authorizeRequests()
     			//.antMatchers("/swagger-ui/**", "/twitter-scheduler-api/**", "/api/**")
-				.antMatchers("/swagger-ui/**", "/api/**", "/h2-console/**")
+				.antMatchers("/swagger-ui/**", "/api/**", "/h2/**")
     		.permitAll()
     		.anyRequest().authenticated()
     		.and()
