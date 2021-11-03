@@ -16,8 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.mastercloudapps.twitterscheduler.application.model.command.CreatePendingTweetRequest;
-import com.mastercloudapps.twitterscheduler.application.model.command.DeletePendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.application.model.operation.CreatePendingTweetOperation;
+import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -30,9 +30,9 @@ public class PendingTweetServiceTest {
 	@Mock
 	private PendingTweetPort pendingTweetPort;
 	
-	CreatePendingTweetRequest createRequest;
+	CreatePendingTweetOperation createRequest;
 	
-	DeletePendingTweetRequest deleteRequest;
+	DeletePendingTweetOperation deleteRequest;
 	
 	PendingTweet pendingTweet;
 	
@@ -46,13 +46,14 @@ public class PendingTweetServiceTest {
 		NullableInstant publicationDate = new NullableInstant(Instant
 				.now()
 				.plus(20,ChronoUnit.MINUTES));
+		NullableInstant createdAt = NullableInstant.now();
 		
-		this.createRequest = CreatePendingTweetRequest.builder()
+		this.createRequest = CreatePendingTweetOperation.builder()
 				.message(message)
 				.publicationDate(publicationDate)
 				.build();
 		
-		this.deleteRequest = DeletePendingTweetRequest.builder()
+		this.deleteRequest = DeletePendingTweetOperation.builder()
 				.id(id)
 				.build();
 		
@@ -60,6 +61,7 @@ public class PendingTweetServiceTest {
 				.id(id)
 				.message(message)
 				.publicationDate(publicationDate.instant())
+				.createdAt(createdAt.instant())
 				.build();
 	}
 	

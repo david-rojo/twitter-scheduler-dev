@@ -21,6 +21,7 @@ public class PendingTweetJpaMapper {
 				.id(pendingTweetEntity.getId())
 				.message(pendingTweetEntity.getMessage())
 				.publicationDate(pendingTweetEntity.getPublicationDate())
+				.createdAt(pendingTweetEntity.getCreatedAt())
 				.build();
 	}
 	
@@ -34,6 +35,7 @@ public class PendingTweetJpaMapper {
 				.builder()
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().instant())
+				.createdAt(pendingTweet.createdAt().instant())
 				.build();
 	}
 	
@@ -48,6 +50,7 @@ public class PendingTweetJpaMapper {
 				.id(pendingTweet.id().id())
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().instant())
+				.createdAt(pendingTweet.createdAt().instant())
 				.build();
 	}
 

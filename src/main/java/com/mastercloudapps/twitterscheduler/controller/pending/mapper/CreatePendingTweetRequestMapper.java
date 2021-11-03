@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.mastercloudapps.twitterscheduler.application.model.command.CreatePendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.application.model.operation.CreatePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -12,7 +12,7 @@ import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 @Component
 public class CreatePendingTweetRequestMapper {
 
-	public CreatePendingTweetRequest mapRequest(final PendingTweetRequest request) {
+	public CreatePendingTweetOperation mapRequest(final PendingTweetRequest request) {
 
 		if (Optional.ofNullable(request).isEmpty()) {
 			throw new InvalidInputException("Invalid payload");
@@ -21,7 +21,7 @@ public class CreatePendingTweetRequestMapper {
 		final var message = this.mapMessage(request);
 		final var publicationDate = this.mapPublicationDate(request);
 		
-		return CreatePendingTweetRequest
+		return CreatePendingTweetOperation
 				.builder()
 				.message(message)
 				.publicationDate(publicationDate)

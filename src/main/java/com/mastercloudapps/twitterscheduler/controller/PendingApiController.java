@@ -107,7 +107,6 @@ public class PendingApiController implements PendingApi {
 				.publicationDate(
 						new NullableInstant(now.plus(20,ChronoUnit.SECONDS)).getFormatted())
 				.createdAt(new NullableInstant(now).getFormatted())
-				.updatedAt(new NullableInstant(now).getFormatted())
 				.build();
 	}
 

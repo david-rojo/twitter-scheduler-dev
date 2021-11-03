@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import com.mastercloudapps.twitterscheduler.application.model.command.DeletePendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -24,9 +24,9 @@ class DeletePendingTweetRequestMapperTest {
 		mapper = new DeletePendingTweetRequestMapper();
 	}
 
-	private DeletePendingTweetRequest buildRequest(MockData mockData) {
+	private DeletePendingTweetOperation buildRequest(MockData mockData) {
 
-		final var builder = DeletePendingTweetRequest
+		final var builder = DeletePendingTweetOperation
 				.builder()
 				.id(mockData.id);
 
@@ -63,10 +63,10 @@ class DeletePendingTweetRequestMapperTest {
 		@Test
 		void mapAllAttributesIsOk() {
 
-			final var deletePendingTweetCommand = mapper.mapRequest(MockData.VALID_REQUEST.id);
+			final var deletePendingTweetOperation = mapper.mapRequest(MockData.VALID_REQUEST.id);
 
-			assertThat(deletePendingTweetCommand, is(notNullValue()));
-			assertThat(deletePendingTweetCommand.getId(), is(MockData.VALID_REQUEST.id));
+			assertThat(deletePendingTweetOperation, is(notNullValue()));
+			assertThat(deletePendingTweetOperation.getId(), is(MockData.VALID_REQUEST.id));
 		}
 	}
 }

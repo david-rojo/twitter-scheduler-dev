@@ -31,4 +31,6 @@ public class PendingTweetJpaEntity {
 	
 	private Instant publicationDate;
 	
+	private Instant createdAt;
+	
 }

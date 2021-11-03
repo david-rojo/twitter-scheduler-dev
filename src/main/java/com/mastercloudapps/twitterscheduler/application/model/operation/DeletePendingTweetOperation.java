@@ -1,6 +1,6 @@
-package com.mastercloudapps.twitterscheduler.application.model.command;
+package com.mastercloudapps.twitterscheduler.application.model.operation;
 
-import com.mastercloudapps.twitterscheduler.application.model.shared.Command;
+import com.mastercloudapps.twitterscheduler.application.model.shared.Operation;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class DeletePendingTweetRequest implements Command {
+public class DeletePendingTweetOperation implements Operation {
 
 	private static final long serialVersionUID = 2558747427860900262L;
 	

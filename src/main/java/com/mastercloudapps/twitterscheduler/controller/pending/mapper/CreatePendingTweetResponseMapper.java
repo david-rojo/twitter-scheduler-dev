@@ -14,7 +14,8 @@ public class CreatePendingTweetResponseMapper {
 				.builder()
 				.pendingTweetId(pendingTweet.id().id())
 				.message(pendingTweet.message().message())
-				.publicationDate(pendingTweet.publicationDate().getFormatted());
+				.publicationDate(pendingTweet.publicationDate().getFormatted())
+				.createdAt(pendingTweet.createdAt().getFormatted());
 		
 		return responseBuilder.build();
 	}

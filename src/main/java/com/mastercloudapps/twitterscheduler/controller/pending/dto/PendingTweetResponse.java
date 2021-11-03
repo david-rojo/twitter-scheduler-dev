@@ -16,6 +16,5 @@ public class PendingTweetResponse {
 	//private List<PendingImageResponse> images;
 	private String publicationDate;
 	private String createdAt;
-	private String updatedAt;
 
 }

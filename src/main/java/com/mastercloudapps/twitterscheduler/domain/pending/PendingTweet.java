@@ -16,11 +16,14 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 	private Message message;
 
 	private NullableInstant publicationDate;
+	
+	private NullableInstant createdAt;
 
 	private PendingTweet(final Builder builder) {
 		super(builder.pendingTweetId);
 		this.message = builder.message;
 		this.publicationDate = builder.publicationDate;
+		this.createdAt = builder.createdAt;
 	}
 
 	public Message message() {
@@ -31,6 +34,11 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 	public NullableInstant publicationDate() {
 
 		return publicationDate;
+	}
+	
+	public NullableInstant createdAt() {
+		
+		return createdAt;
 	}
 
 	public static IdStep builder() {
@@ -50,7 +58,12 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 
 	public interface PublicationDateStep {
 
-		Build publicationDate(final Instant instant);
+		CreatedAtStep publicationDate(final Instant instant);
+	}
+	
+	public interface CreatedAtStep {
+		
+		Build createdAt(final Instant instant);
 	}
 
 	public interface Build {
@@ -58,13 +71,16 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 		PendingTweet build();
 	}
 
-	public static class Builder implements IdStep, MessageStep, PublicationDateStep, Build {
+	public static class Builder implements IdStep, MessageStep, PublicationDateStep,
+		CreatedAtStep, Build {
 
 		private PendingTweetId pendingTweetId;
 
 		private Message message;
 
 		private NullableInstant publicationDate;
+		
+		private NullableInstant createdAt;
 
 		@Override
 		public MessageStep id(Long pendingTweetId) {
@@ -79,7 +95,7 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 		}
 
 		@Override
-		public Build publicationDate(Instant instant) {
+		public CreatedAtStep publicationDate(Instant instant) {
 			Instant pubDate = requireNonNull(instant, "Publication date date cannot be null.");
 			NullableInstant niPubDate = new NullableInstant(pubDate);
 			NullableInstant niNow = NullableInstant.now();
@@ -91,10 +107,17 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 		}
 
 		@Override
+		public Build createdAt(Instant instant) {
+			Instant creationDate = requireNonNull(instant, "CreatedAt date cannot be null.");
+			NullableInstant niCreatedAt = new NullableInstant(creationDate);
+			this.createdAt = niCreatedAt;
+			return this;
+		}
+		
+		@Override
 		public PendingTweet build() {
 			return new PendingTweet(this);
 		}
-
 	}
 	
 }

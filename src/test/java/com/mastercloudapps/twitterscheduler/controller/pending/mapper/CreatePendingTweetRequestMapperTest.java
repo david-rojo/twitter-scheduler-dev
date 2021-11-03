@@ -91,11 +91,11 @@ class CreatePendingTweetRequestMapperTest {
 		@Test
 		void mapAllAttributesIsOk() {
 			PendingTweetRequest request = buildRequest(MockData.VALID_REQUEST);
-			final var createPendingTweetCommand = mapper.mapRequest(request);
+			final var createPendingTweetOperation = mapper.mapRequest(request);
 
-			assertThat(createPendingTweetCommand, is(notNullValue()));
-			assertThat(createPendingTweetCommand.getMessage(), is(MockData.VALID_REQUEST.message));
-			assertThat(createPendingTweetCommand.getPublicationDate(), is(NullableInstant.fromUtcISO8601(MockData.VALID_REQUEST.publicationDate)));
+			assertThat(createPendingTweetOperation, is(notNullValue()));
+			assertThat(createPendingTweetOperation.getMessage(), is(MockData.VALID_REQUEST.message));
+			assertThat(createPendingTweetOperation.getPublicationDate(), is(NullableInstant.fromUtcISO8601(MockData.VALID_REQUEST.publicationDate)));
 		}
 	}
 

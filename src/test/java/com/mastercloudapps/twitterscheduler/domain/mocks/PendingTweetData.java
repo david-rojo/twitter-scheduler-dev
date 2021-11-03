@@ -5,20 +5,32 @@ import java.time.Instant;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 
 public enum PendingTweetData {
-	HAPPY_NEW_YEAR(1L,"Happy new year!", Instant.parse(Constants.PUBLICATION_DATE_NEW_YEAR_2023)),
-	MERRY_CHRISTMAS(1L,"Merry Christmas!", Instant.parse(Constants.PUBLICATION_DATE_CHRISTMAS_2024));
+	HAPPY_NEW_YEAR(
+			1L,
+			"Happy new year!",
+			Instant.parse(Constants.PUBLICATION_DATE_NEW_YEAR_2023),
+			Instant.parse(Constants.CREATED_AT_DATE_1)),
+	MERRY_CHRISTMAS(
+			1L,
+			"Merry Christmas!",
+			Instant.parse(Constants.PUBLICATION_DATE_CHRISTMAS_2024),
+			Instant.parse(Constants.CREATED_AT_DATE_2));
 
 	private final Long id;
 
 	private final String message;
 
 	private Instant publicationDate;
+	
+	private Instant createdAt;
 
-	PendingTweetData(final Long id, final String message, final Instant publicationDate) {
+	PendingTweetData(final Long id, final String message, final Instant publicationDate,
+			final Instant createdAt) {
 
 		this.id = id;
 		this.message = message;
 		this.publicationDate = publicationDate;
+		this.createdAt = createdAt;
 	}
 
 	public PendingTweet create() {
@@ -27,6 +39,7 @@ public enum PendingTweetData {
 				.id(this.id)
 				.message(this.message)
 				.publicationDate(this.publicationDate)
+				.createdAt(this.createdAt)
 				.build();
 	}
 
@@ -36,6 +49,10 @@ public enum PendingTweetData {
 		public static final String PUBLICATION_DATE_NEW_YEAR_2023 = "2023-01-01T00:00:00Z";
 
 		public static final String PUBLICATION_DATE_CHRISTMAS_2024 = "2024-12-25T00:00:00Z";
+		
+		public static final String CREATED_AT_DATE_1 = "2021-10-01T00:00:00Z";
+		
+		public static final String CREATED_AT_DATE_2 = "2021-11-01T00:00:00Z";
 
 		private Constants() {}
 	}

@@ -2,13 +2,14 @@ package com.mastercloudapps.twitterscheduler.application.service;
 
 import org.springframework.stereotype.Component;
 
-import com.mastercloudapps.twitterscheduler.application.model.command.CreatePendingTweetRequest;
-import com.mastercloudapps.twitterscheduler.application.model.command.DeletePendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.application.model.operation.CreatePendingTweetOperation;
+import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetId;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
+import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 @Component
 public class PendingTweetService implements CreatePendingTweetUseCase, DeletePendingTweetUseCase {
@@ -22,19 +23,20 @@ public class PendingTweetService implements CreatePendingTweetUseCase, DeletePen
 	}
 	
 	@Override
-	public PendingTweet createPendingTweet(CreatePendingTweetRequest request) {
+	public PendingTweet createPendingTweet(CreatePendingTweetOperation request) {
 		
 		PendingTweet pendingTweet = PendingTweet.builder()
 				.id(PendingTweetId.defaultValue())
 				.message(request.getMessage())
 				.publicationDate(request.getPublicationDate().instant())
+				.createdAt(NullableInstant.now().instant())
 				.build();
 		
 		return pendingTweetPort.createPendingTweet(pendingTweet);
 	}
 
 	@Override
-	public void deletePendingTweet(DeletePendingTweetRequest request) {
+	public void deletePendingTweet(DeletePendingTweetOperation request) {
 		
 		pendingTweetPort.deletePendingTweet(request.getId());
 		

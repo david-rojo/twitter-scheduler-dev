@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
+import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 class PendingTweetTest {
 
@@ -27,34 +28,72 @@ class PendingTweetTest {
 				.id(mockData.pendingTweetId)
 				.message(mockData.message)
 				.publicationDate(mockData.publicationDate)
+				.createdAt(mockData.createdAt)
 				.build();
 	}
 
 	enum MockData {
-		VALID(1L, "valid message 1", LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
-		VALID_OTHER_SAME_ID(1L, "valid message 2", LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
-		VALID_OTHER_DIFFERENT_ID(2L, "valid message 3", LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
-		INVALID_NULL_ID(null, "abc", Instant.MAX),
-		INVALID_NULL_MESSAGE(1L, null, Instant.MAX),
-		INVALID_NULL_PUBLICATION_DATE(1L, "xyz", null),
-		INVALID_EXPIRED_PUBLICATION_DATE(1L, "asdf", LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC)),
+		VALID(
+				1L,
+				"valid message 1",
+				LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant()),
+		VALID_OTHER_SAME_ID(
+				1L, 
+				"valid message 2",
+				LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant()),
+		VALID_OTHER_DIFFERENT_ID(
+				2L, 
+				"valid message 3", 
+				LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant()),
+		INVALID_NULL_ID(
+				null, 
+				"abc",
+				Instant.MAX,
+				NullableInstant.now().instant()),
+		INVALID_NULL_MESSAGE(
+				1L,
+				null,
+				Instant.MAX,
+				NullableInstant.now().instant()),
+		INVALID_NULL_PUBLICATION_DATE(
+				1L,
+				"xyz",
+				null,
+				NullableInstant.now().instant()),
+		INVALID_NULL_CREATED_AT(
+				1L,
+				"ijk",
+				Instant.MAX,
+				null),
+		INVALID_EXPIRED_PUBLICATION_DATE(
+				1L,
+				"asdf",
+				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant()),
 		INVALID_MESSAGE_MAX_LENGTH_EXCEEDED(
 				1L,
 				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 						+ "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type "
 						+ "and scrambled it to make a type specimen book. It has survived not only five years.",
-				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC));
+				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant());
 
 		private final Long pendingTweetId;
 
 		private final String message;
 
 		private final Instant publicationDate;
+		
+		private final Instant createdAt;
 
-		MockData(final Long pendingTweetId, final String message, final Instant publicationDate) {
+		MockData(final Long pendingTweetId, final String message, final Instant publicationDate, final Instant createdAt) {
 			this.pendingTweetId = pendingTweetId;
 			this.message = message;
 			this.publicationDate = publicationDate;
+			this.createdAt = createdAt;
 		}
 	}
 
@@ -68,6 +107,7 @@ class PendingTweetTest {
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_ID));
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_MESSAGE));
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_PUBLICATION_DATE));
+			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_CREATED_AT));
 		}
 		
 		@Test
@@ -101,6 +141,7 @@ class PendingTweetTest {
 	      assertThat(pendingTweet.id().id(), is(MockData.VALID.pendingTweetId));
 	      assertThat(pendingTweet.message().message(), is(MockData.VALID.message));
 	      assertThat(pendingTweet.publicationDate().instant(), is(MockData.VALID.publicationDate));
+	      assertThat(pendingTweet.createdAt().instant(), is(MockData.VALID.createdAt));
 	    }
 	  }
 	  

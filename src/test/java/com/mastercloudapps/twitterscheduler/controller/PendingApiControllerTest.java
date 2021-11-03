@@ -53,6 +53,7 @@ class PendingApiControllerTest {
 		Long id = 1L;
 		String message = "test message";
 		String publicationDate = "2023-04-01T10:00:00Z";
+		String createdAt = "2023-04-01T10:00:00Z";
 
 		pendingTweetRequest = PendingTweetRequest
 				.builder()
@@ -65,6 +66,7 @@ class PendingApiControllerTest {
 				.id(id)
 				.message(message)
 				.publicationDate(NullableInstant.fromUtcISO8601(publicationDate).instant())
+				.createdAt(NullableInstant.fromUtcISO8601(createdAt).instant())
 				.build();
 	}
 
