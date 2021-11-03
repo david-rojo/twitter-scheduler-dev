@@ -103,7 +103,14 @@ jobs:
       - name: Check app
         uses: wei/curl@v1
         with:
-          args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/info
+          args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health
+      - name: Check app up
+        run: |
+          BODY=$(curl -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health)
+          echo $BODY
+          if [ "$BODY" != "{"status":"UP"}" ]; then
+            exit 1
+          fi
 
   coverage:
     name: Coverage
