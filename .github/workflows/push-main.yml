@@ -106,13 +106,14 @@ jobs:
           args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health
       - name: Check app up
         run: |
-          BODY=$(curl -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health)
-          echo $BODY
-          if [ "$BODY" != "{"status":"UP"}" ]; then
-            echo "cumple la condicion"
+          curl -sS https://webinstall.dev/jq | bash
+          APP_STATUS=$(curl -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health | jq '.status' | sed 's/"//g')
+          echo $APP_STATUS
+          if [ "$APP_STATUS" != "UP" ]; then
+            echo "EL ESTADO NO ES UP"
             exit 1
           else
-            echo "no cumple la condicion"
+            echo "EL ESTADO ES UP"
           fi
 
   coverage:
