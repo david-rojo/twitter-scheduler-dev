@@ -16,11 +16,11 @@ import lombok.ToString;
 public class CreatePendingTweetRequest implements Command {
 
 	private static final long serialVersionUID = 3099486578059492608L;
-	
-	  @NonNull
-	  private final String message;
 
-	  @NonNull
-	  private final NullableInstant publicationDate;
+	@NonNull
+	private final String message;
+
+	@NonNull
+	private final NullableInstant publicationDate;
 
 }

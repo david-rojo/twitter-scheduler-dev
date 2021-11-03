@@ -8,7 +8,7 @@ public class MessageMaxLengthExceededException extends RuntimeException {
 	
 	public MessageMaxLengthExceededException(String message) {
 
-		super("Message exceeds Twitter allowed max length (" + Message.maxLength() 
+		super("Message exceeds Twitter allowed max length (" + Message.maxLength() + ")"
 		+ ". Message length is " + message.length() 
 		+ ". Message: " + message);
 	}
