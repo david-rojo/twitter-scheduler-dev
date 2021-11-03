@@ -40,7 +40,7 @@ public class PendingTweetId extends DomainObjectId<Long> {
 		return Objects.hash(id);
 	}
 
-	public static Long maxValue() {
+	public static Long defaultValue() {
 		return DEFAULT_VALUE;
 	}
 

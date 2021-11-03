@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mastercloudapps.twitterscheduler.application.model.command.CreatePendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.application.model.command.DeletePendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -30,6 +31,8 @@ public class PendingTweetServiceTest {
 	private PendingTweetPort pendingTweetPort;
 	
 	CreatePendingTweetRequest createRequest;
+	
+	DeletePendingTweetRequest deleteRequest;
 	
 	PendingTweet pendingTweet;
 	
@@ -49,6 +52,10 @@ public class PendingTweetServiceTest {
 				.publicationDate(publicationDate)
 				.build();
 		
+		this.deleteRequest = DeletePendingTweetRequest.builder()
+				.id(id)
+				.build();
+		
 		this.pendingTweet = PendingTweet.builder()
 				.id(id)
 				.message(message)
@@ -58,7 +65,7 @@ public class PendingTweetServiceTest {
 	
 	@Test
 	@DisplayName("Test create pending tweet with valid request")
-	void givenValidRequest_expectCreatedPendingTweet() {
+	void givenCreateValidRequest_expectCreatedPendingTweet() {
 		
 		when(service.createPendingTweet(createRequest)).thenReturn(pendingTweet);
 		

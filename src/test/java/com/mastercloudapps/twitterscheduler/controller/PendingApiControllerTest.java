@@ -1,6 +1,8 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,10 +15,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
@@ -33,6 +37,9 @@ class PendingApiControllerTest {
 
 	@MockBean
 	private CreatePendingTweetUseCase createPendingTweetUseCase;
+	
+	@MockBean
+	private DeletePendingTweetUseCase deletePendingTweetUseCase;
 
 	PendingTweetRequest pendingTweetRequest;
 
@@ -62,7 +69,7 @@ class PendingApiControllerTest {
 	}
 
 	@Test
-	@DisplayName("Post pending tweet with logged user, expect created")
+	@DisplayName("Post pending tweet, expect created")
 	//@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
 	void createPendingTweetTest() throws Exception {
 
@@ -74,6 +81,19 @@ class PendingApiControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(asJsonString(pendingTweetRequest)))
 		.andExpect(status().isCreated());
+	}
+	
+	@Test
+	@DisplayName("Delete pending tweet, expect deleted")
+	@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
+	void deletePendingTweetTest() throws Exception {
+
+		doNothing().when(deletePendingTweetUseCase).deletePendingTweet(Mockito.any());
+
+		mvc.perform(
+				delete("/api/pending/" + pendingTweet.id().id())
+					.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
 	}
 
 	public static String asJsonString(final Object obj) {

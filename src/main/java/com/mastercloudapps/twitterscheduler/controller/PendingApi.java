@@ -2,6 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import java.util.Collection;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -54,8 +55,7 @@ public interface PendingApi {
 			description = "Deletes a pending tweet and its images", 
 			tags = { "pending" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted",
-        		content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
+        @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted"),
         @ApiResponse(responseCode = "404", description = "pending tweet not found") })
-	public PendingTweetResponse deletePendingTweet(@PathVariable Long id);
+	public ResponseEntity<Void> deletePendingTweet(@PathVariable Long id);
 }

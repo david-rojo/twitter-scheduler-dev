@@ -45,4 +45,11 @@ public class PendingTweetAdapter implements PendingTweetPort {
 		}
 	}
 
+	@Override
+	public void deletePendingTweet(Long id) {
+		
+		pendingTweetJpaRepository.deleteById(id);
+		
+	}
+
 }
