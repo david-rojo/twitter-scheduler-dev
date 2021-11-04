@@ -1,10 +1,18 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,12 +23,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllPendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
@@ -36,21 +44,26 @@ class PendingApiControllerTest {
 	private MockMvc mvc;
 
 	@MockBean
-	private CreatePendingTweetUseCase createPendingTweetUseCase;
+	private CreatePendingTweetUseCase createTweetUseCase;
 	
 	@MockBean
-	private DeletePendingTweetUseCase deletePendingTweetUseCase;
+	private DeletePendingTweetUseCase deleteUseCase;
+	
+	@MockBean
+	private FindAllPendingTweetUseCase findAllUseCase;
 
 	PendingTweetRequest pendingTweetRequest;
 
 	PendingTweetResponse pendingTweetResponse;
 
 	PendingTweet pendingTweet;
+	
+	PendingTweet anotherPendingTweet;
 
 	@BeforeEach
 	void setup() {
 
-		Long id = 1L;
+		Long id = (long) 1;
 		String message = "test message";
 		String publicationDate = "2023-04-01T10:00:00Z";
 		String createdAt = "2023-04-01T10:00:00Z";
@@ -68,6 +81,14 @@ class PendingApiControllerTest {
 				.publicationDate(NullableInstant.fromUtcISO8601(publicationDate).instant())
 				.createdAt(NullableInstant.fromUtcISO8601(createdAt).instant())
 				.build();
+		
+		anotherPendingTweet = PendingTweet
+				.builder()
+				.id(2L)
+				.message("another test message")
+				.publicationDate(NullableInstant.fromUtcISO8601("2024-04-01T10:00:00Z").instant())
+				.createdAt(NullableInstant.fromUtcISO8601("2023-08-01T10:00:00Z").instant())
+				.build();		
 	}
 
 	@Test
@@ -75,7 +96,7 @@ class PendingApiControllerTest {
 	//@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
 	void createPendingTweetTest() throws Exception {
 
-		when(createPendingTweetUseCase.createPendingTweet(Mockito.any()))
+		when(createTweetUseCase.createPendingTweet(Mockito.any()))
 			.thenReturn(pendingTweet);
 
 		mvc.perform(
@@ -87,10 +108,10 @@ class PendingApiControllerTest {
 	
 	@Test
 	@DisplayName("Delete pending tweet, expect deleted")
-	@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
+//	@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
 	void deletePendingTweetTest() throws Exception {
 
-		doNothing().when(deletePendingTweetUseCase).deletePendingTweet(Mockito.any());
+		doNothing().when(deleteUseCase).deletePendingTweet(Mockito.any());
 
 		mvc.perform(
 				delete("/api/pending/" + pendingTweet.id().id())
@@ -98,6 +119,27 @@ class PendingApiControllerTest {
 		.andExpect(status().isOk());
 	}
 
+	@Test
+	@DisplayName("Find all pending tweets, expect all pending tweets")
+	void findAllPendingTweetTest() throws Exception {
+	
+		List<PendingTweet> pendingTweets = Stream.of(pendingTweet, anotherPendingTweet)
+				.collect(Collectors.toList());
+		
+		when(findAllUseCase.findAll()).thenReturn(pendingTweets);
+		
+		mvc.perform(
+	    		get("/api/pending/")
+	    		.contentType(MediaType.APPLICATION_JSON)
+	    	)
+	    	.andExpect(status().isOk())
+	    	.andExpect(jsonPath("$", hasSize(2)))
+	    	.andExpect(jsonPath("$[0].id", equalTo(Math.toIntExact(pendingTweet.id().id()))))
+	    	.andExpect(jsonPath("$[0].message", equalTo(pendingTweet.message().message())))
+	    	.andExpect(jsonPath("$[1].id", equalTo(Math.toIntExact(anotherPendingTweet.id().id()))))
+	    	.andExpect(jsonPath("$[1].message", equalTo(anotherPendingTweet.message().message())));
+	}
+	
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);

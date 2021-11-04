@@ -6,13 +6,13 @@ import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetR
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 
 @Component
-public class CreatePendingTweetResponseMapper {
+public class PendingTweetResponseMapper {
 
 	public PendingTweetResponse mapResponse(PendingTweet pendingTweet) {
 		
 		var responseBuilder = PendingTweetResponse
 				.builder()
-				.pendingTweetId(pendingTweet.id().id())
+				.id(pendingTweet.id().id())
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().getFormatted())
 				.createdAt(pendingTweet.createdAt().getFormatted());

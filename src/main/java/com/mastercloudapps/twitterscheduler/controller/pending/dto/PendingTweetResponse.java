@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PendingTweetResponse {
 
-	private Long pendingTweetId;
+	private Long id;
 	private String message;
 	//private List<PendingImageResponse> images;
 	private String publicationDate;

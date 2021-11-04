@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllPendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.CreatePendingTweetRequestMapper;
-import com.mastercloudapps.twitterscheduler.controller.pending.mapper.CreatePendingTweetResponseMapper;
+import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PendingTweetResponseMapper;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.DeletePendingTweetRequestMapper;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
@@ -34,7 +36,7 @@ public class PendingApiController implements PendingApi {
 
 	private final CreatePendingTweetRequestMapper createPendingTweetRequestMapper;
 	
-	private final CreatePendingTweetResponseMapper createPendingTweetResponseMapper;
+	private final PendingTweetResponseMapper responseMapper;
 	
 	private final CreatePendingTweetUseCase createPendingTweetUseCase;
 	
@@ -42,24 +44,30 @@ public class PendingApiController implements PendingApi {
 	
 	private final DeletePendingTweetRequestMapper deletePendingTweetRequestMapper;
 	
+	private final FindAllPendingTweetUseCase findAllPendingTweetUseCase;
+	
 	@Autowired
 	public PendingApiController(final CreatePendingTweetRequestMapper createPendingTweetRequestMapper,
-			final CreatePendingTweetResponseMapper createPendingTweetResponseMapper,
+			final PendingTweetResponseMapper responseMapper,
 			final CreatePendingTweetUseCase createPendingTweetUseCase,
 			final DeletePendingTweetUseCase deletePendingTweetUseCase,
-			final DeletePendingTweetRequestMapper deletePendingTweetRequestMapper) {
+			final DeletePendingTweetRequestMapper deletePendingTweetRequestMapper,
+			final FindAllPendingTweetUseCase findAllPendingTweetUseCase) {
 		
 		this.createPendingTweetRequestMapper = createPendingTweetRequestMapper;
-		this.createPendingTweetResponseMapper = createPendingTweetResponseMapper;
+		this.responseMapper = responseMapper;
 		this.createPendingTweetUseCase = createPendingTweetUseCase;
 		this.deletePendingTweetUseCase = deletePendingTweetUseCase;
 		this.deletePendingTweetRequestMapper = deletePendingTweetRequestMapper;
+		this.findAllPendingTweetUseCase = findAllPendingTweetUseCase;
 	}
 	
 	@GetMapping
 	public Collection<PendingTweetResponse> getPendingTweets() {
 		
-		return Collections.emptyList();
+		return findAllPendingTweetUseCase.findAll().stream()
+				.map(pendingTweet -> responseMapper.mapResponse(pendingTweet))
+				.collect(Collectors.toList());		
 	}
 
 	@GetMapping("/{id}")
@@ -76,9 +84,7 @@ public class PendingApiController implements PendingApi {
 		
 		final var createPendingTweetResponse = createPendingTweetUseCase.createPendingTweet(createPendingTweetRequest);
 		
-		return createPendingTweetResponseMapper.mapResponse(createPendingTweetResponse);
-		
-		//return getDummyResponse(505L);
+		return responseMapper.mapResponse(createPendingTweetResponse);
 	}
 
 	@DeleteMapping("/{id}")
@@ -98,7 +104,7 @@ public class PendingApiController implements PendingApi {
 		
 		Instant now = Instant.now();
 		return PendingTweetResponse.builder()
-				.pendingTweetId(id)
+				.id(id)
 				.message("Status message")
 //				.images(Arrays.asList(PendingImageResponse.builder()
 //						.pendingImageId(5555L)

@@ -4,13 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CreatePendingTweetResponseMapperTest {
+public class PendingTweetResponseMapperTest {
 	
-	private CreatePendingTweetResponseMapper mapper;
+	private PendingTweetResponseMapper mapper;
 	
 	@BeforeEach
 	void setUp() {
-		mapper = new CreatePendingTweetResponseMapper();
+		mapper = new PendingTweetResponseMapper();
 	}
 
 }

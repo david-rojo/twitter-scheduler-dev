@@ -3,11 +3,15 @@ package com.mastercloudapps.twitterscheduler.application.service;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,6 +40,8 @@ public class PendingTweetServiceTest {
 	
 	PendingTweet pendingTweet;
 	
+	PendingTweet anotherPendingTweet;
+	
 	@BeforeEach
 	public void beforeEach() {
 		
@@ -63,6 +69,20 @@ public class PendingTweetServiceTest {
 				.publicationDate(publicationDate.instant())
 				.createdAt(createdAt.instant())
 				.build();
+		
+		Long anotherId = 2L;
+		String anotherMessage = "another test message";
+		NullableInstant anotherPublicationDate = new NullableInstant(Instant
+				.now()
+				.plus(30,ChronoUnit.MINUTES));
+		NullableInstant anotherCreatedAt = NullableInstant.now();
+		
+		this.anotherPendingTweet = PendingTweet.builder()
+				.id(anotherId)
+				.message(anotherMessage)
+				.publicationDate(anotherPublicationDate.instant())
+				.createdAt(anotherCreatedAt.instant())
+				.build();
 	}
 	
 	@Test
@@ -78,5 +98,28 @@ public class PendingTweetServiceTest {
 		assertEquals(created.message().message(), createRequest.getMessage());
 		assertEquals(created.publicationDate().instant(), createRequest.getPublicationDate().instant());
 	}
+	
+	@Test
+	@DisplayName("Test find all pending tweets with valid request")
+	void givenFindAllValidRequest_expectAllPendingTweets() {
+		
+		List<PendingTweet> pendingTweets = Stream.of(pendingTweet, anotherPendingTweet)
+				.collect(Collectors.toList());
+		
+		when(service.findAll()).thenReturn(pendingTweets);
+		
+		var pendingTweetsResponse = service.findAll().stream().collect(Collectors.toList());
+		
+		assertThat(pendingTweetsResponse, is(notNullValue()));
+		assertThat(pendingTweetsResponse,hasSize(2));
+		assertThat(pendingTweetsResponse.get(0), is(notNullValue()));
+		assertEquals(pendingTweetsResponse.get(0).id().id(), pendingTweet.id().id());
+		assertEquals(pendingTweetsResponse.get(0).message().message(), pendingTweet.message().message());
+		assertThat(pendingTweetsResponse.get(1), is(notNullValue()));
+		assertEquals(pendingTweetsResponse.get(1).id().id(), anotherPendingTweet.id().id());
+		assertEquals(pendingTweetsResponse.get(1).message().message(), anotherPendingTweet.message().message());
+	}
+	
+	
 
 }
