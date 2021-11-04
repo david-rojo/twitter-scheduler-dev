@@ -1,5 +1,6 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.doNothing;
@@ -11,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllPendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
@@ -51,6 +54,9 @@ class PendingApiControllerTest {
 	
 	@MockBean
 	private FindAllPendingTweetUseCase findAllUseCase;
+	
+	@MockBean
+	private FindOnePendingTweetUseCase findOneUseCase;
 
 	PendingTweetRequest pendingTweetRequest;
 
@@ -137,7 +143,22 @@ class PendingApiControllerTest {
 	    	.andExpect(jsonPath("$[0].id", equalTo(Math.toIntExact(pendingTweet.id().id()))))
 	    	.andExpect(jsonPath("$[0].message", equalTo(pendingTweet.message().message())))
 	    	.andExpect(jsonPath("$[1].id", equalTo(Math.toIntExact(anotherPendingTweet.id().id()))))
-	    	.andExpect(jsonPath("$[1].message", equalTo(anotherPendingTweet.message().message())));
+	    	.andExpect(jsonPath("$[1].message", equalTo(anotherPendingTweet.message().message())));	    	
+	}
+	
+	@Test
+	@DisplayName("Find one pending tweet by id, expect pending tweet")
+	void findOnePendingTweetTest() throws Exception {
+		
+		when(findOneUseCase.findOne(any())).thenReturn(Optional.of(pendingTweet));
+		
+		mvc.perform(
+	    		get("/api/pending/" + pendingTweet.id().id())
+	    		.contentType(MediaType.APPLICATION_JSON)
+	    	)
+	    	.andExpect(status().isOk())
+	    	.andExpect(jsonPath("$.id", equalTo(Math.toIntExact(pendingTweet.id().id()))))
+	    	.andExpect(jsonPath("$.message", equalTo(pendingTweet.message().message())));
 	}
 	
 	public static String asJsonString(final Object obj) {

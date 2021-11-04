@@ -1,6 +1,7 @@
 package com.mastercloudapps.twitterscheduler.infrastructure.pending;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataAccessException;
@@ -61,6 +62,17 @@ public class PendingTweetAdapter implements PendingTweetPort {
 		return pendingTweetJpaRepository.findAll().stream()
 				.map(entity -> mapper.mapEntity(entity))
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<PendingTweet> findOne(Long id) {
+		
+		final var pendingTweetJpa = pendingTweetJpaRepository.findById(id);
+
+		if (pendingTweetJpa.isPresent()) {
+			return Optional.of(mapper.mapEntity(pendingTweetJpa.get()));
+		}
+		return Optional.empty();
 	}
 
 }

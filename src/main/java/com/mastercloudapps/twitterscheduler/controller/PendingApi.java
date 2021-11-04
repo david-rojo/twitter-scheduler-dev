@@ -38,7 +38,7 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "tweet not found") })
-	public PendingTweetResponse getPendingTweetById(@PathVariable Long id);
+	public ResponseEntity<PendingTweetResponse> getPendingTweetById(@PathVariable Long id);
 	
 	@Operation(
 			summary = "Add a new pending tweet", 

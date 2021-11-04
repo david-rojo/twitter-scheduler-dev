@@ -4,5 +4,5 @@ import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePe
 
 public interface DeletePendingTweetUseCase {
 
-	public void deletePendingTweet(DeletePendingTweetOperation request);
+	public void deletePendingTweet(DeletePendingTweetOperation operation);
 }

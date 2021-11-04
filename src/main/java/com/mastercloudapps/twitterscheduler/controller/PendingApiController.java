@@ -1,9 +1,6 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllPendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.CreatePendingTweetRequestMapper;
-import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PendingTweetResponseMapper;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.DeletePendingTweetRequestMapper;
-import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
+import com.mastercloudapps.twitterscheduler.controller.pending.mapper.FindOnePendingTweetRequestMapper;
+import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PendingTweetResponseMapper;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -46,13 +44,19 @@ public class PendingApiController implements PendingApi {
 	
 	private final FindAllPendingTweetUseCase findAllPendingTweetUseCase;
 	
+	private final FindOnePendingTweetUseCase findOnePendingTweetUseCase;
+	
+	private final FindOnePendingTweetRequestMapper findOnePendingTweetRequestMapper;
+	
 	@Autowired
 	public PendingApiController(final CreatePendingTweetRequestMapper createPendingTweetRequestMapper,
 			final PendingTweetResponseMapper responseMapper,
 			final CreatePendingTweetUseCase createPendingTweetUseCase,
 			final DeletePendingTweetUseCase deletePendingTweetUseCase,
 			final DeletePendingTweetRequestMapper deletePendingTweetRequestMapper,
-			final FindAllPendingTweetUseCase findAllPendingTweetUseCase) {
+			final FindAllPendingTweetUseCase findAllPendingTweetUseCase,
+			final FindOnePendingTweetUseCase findOnePendingTweetUseCase,
+			final FindOnePendingTweetRequestMapper findOnePendingTweetRequestMapper) {
 		
 		this.createPendingTweetRequestMapper = createPendingTweetRequestMapper;
 		this.responseMapper = responseMapper;
@@ -60,6 +64,8 @@ public class PendingApiController implements PendingApi {
 		this.deletePendingTweetUseCase = deletePendingTweetUseCase;
 		this.deletePendingTweetRequestMapper = deletePendingTweetRequestMapper;
 		this.findAllPendingTweetUseCase = findAllPendingTweetUseCase;
+		this.findOnePendingTweetUseCase = findOnePendingTweetUseCase;
+		this.findOnePendingTweetRequestMapper = findOnePendingTweetRequestMapper;
 	}
 	
 	@GetMapping
@@ -71,9 +77,16 @@ public class PendingApiController implements PendingApi {
 	}
 
 	@GetMapping("/{id}")
-	public PendingTweetResponse getPendingTweetById(Long id) {
+	public ResponseEntity<PendingTweetResponse> getPendingTweetById(Long id) {
 
-		return getDummyResponse(id);
+		final var pendingTweet = findOnePendingTweetUseCase.findOne(
+				findOnePendingTweetRequestMapper.mapRequest(id));
+		
+		if(pendingTweet.isPresent()) {
+			return new ResponseEntity<>(responseMapper.mapResponse(pendingTweet.get()), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@PostMapping
@@ -100,20 +113,4 @@ public class PendingApiController implements PendingApi {
 		}
 	}
 	
-	private PendingTweetResponse getDummyResponse(Long id) {
-		
-		Instant now = Instant.now();
-		return PendingTweetResponse.builder()
-				.id(id)
-				.message("Status message")
-//				.images(Arrays.asList(PendingImageResponse.builder()
-//						.pendingImageId(5555L)
-//						.url("https://davidrojo.eu/images/tfm/1.jpg")
-//						.build()))
-				.publicationDate(
-						new NullableInstant(now.plus(20,ChronoUnit.SECONDS)).getFormatted())
-				.createdAt(new NullableInstant(now).getFormatted())
-				.build();
-	}
-
 }
