@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface PendingTweetPort {
 
-	public PendingTweet createPendingTweet(PendingTweet pendingTweet);
+	public PendingTweet create(PendingTweet pendingTweet);
 	
-	public void deletePendingTweet(Long id);
+	public void delete(Long id);
 	
 	public Collection<PendingTweet> findAll();
 	

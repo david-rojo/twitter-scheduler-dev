@@ -31,7 +31,7 @@ public class PendingTweetAdapter implements PendingTweetPort {
 	}
 	
 	@Override	
-	public PendingTweet createPendingTweet(PendingTweet pendingTweet) {
+	public PendingTweet create(PendingTweet pendingTweet) {
 		
 		try {
 			PendingTweetJpaEntity pendingTweetJpaEntity = mapper.mapCreatePendingTweet(pendingTweet);			
@@ -50,7 +50,7 @@ public class PendingTweetAdapter implements PendingTweetPort {
 	}
 
 	@Override
-	public void deletePendingTweet(Long id) {
+	public void delete(Long id) {
 		
 		pendingTweetJpaRepository.deleteById(id);
 		

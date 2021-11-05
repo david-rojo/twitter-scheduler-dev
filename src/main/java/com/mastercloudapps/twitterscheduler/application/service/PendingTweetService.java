@@ -30,7 +30,7 @@ public class PendingTweetService implements CreatePendingTweetUseCase, DeletePen
 	}
 	
 	@Override
-	public PendingTweet createPendingTweet(CreatePendingTweetOperation request) {
+	public PendingTweet create(CreatePendingTweetOperation request) {
 		
 		PendingTweet pendingTweet = PendingTweet.builder()
 				.id(PendingTweetId.defaultValue())
@@ -39,13 +39,13 @@ public class PendingTweetService implements CreatePendingTweetUseCase, DeletePen
 				.createdAt(NullableInstant.now().instant())
 				.build();
 		
-		return pendingTweetPort.createPendingTweet(pendingTweet);
+		return pendingTweetPort.create(pendingTweet);
 	}
 
 	@Override
-	public void deletePendingTweet(DeletePendingTweetOperation request) {
+	public void delete(DeletePendingTweetOperation request) {
 		
-		pendingTweetPort.deletePendingTweet(request.getId());
+		pendingTweetPort.delete(request.getId());
 		
 	}
 

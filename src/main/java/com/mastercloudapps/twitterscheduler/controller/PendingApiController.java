@@ -95,7 +95,7 @@ public class PendingApiController implements PendingApi {
 
 		final var createPendingTweetRequest = createPendingTweetRequestMapper.mapRequest(request);
 		
-		final var createPendingTweetResponse = createPendingTweetUseCase.createPendingTweet(createPendingTweetRequest);
+		final var createPendingTweetResponse = createPendingTweetUseCase.create(createPendingTweetRequest);
 		
 		return responseMapper.mapResponse(createPendingTweetResponse);
 	}
@@ -104,7 +104,7 @@ public class PendingApiController implements PendingApi {
 	public ResponseEntity<Void> deletePendingTweet(Long id) {
 				
 		try {
-			deletePendingTweetUseCase.deletePendingTweet(
+			deletePendingTweetUseCase.delete(
 					deletePendingTweetRequestMapper.mapRequest(id));
 			return new ResponseEntity<>(null, HttpStatus.OK);
 

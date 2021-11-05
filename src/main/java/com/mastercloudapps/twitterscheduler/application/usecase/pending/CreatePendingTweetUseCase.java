@@ -5,6 +5,6 @@ import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 
 public interface CreatePendingTweetUseCase {
 
-	PendingTweet createPendingTweet(CreatePendingTweetOperation operation);
+	PendingTweet create(CreatePendingTweetOperation operation);
 
 }

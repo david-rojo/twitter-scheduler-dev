@@ -99,10 +99,9 @@ class PendingApiControllerTest {
 
 	@Test
 	@DisplayName("Post pending tweet, expect created")
-	//@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
 	void createPendingTweetTest() throws Exception {
 
-		when(createTweetUseCase.createPendingTweet(Mockito.any()))
+		when(createTweetUseCase.create(Mockito.any()))
 			.thenReturn(pendingTweet);
 
 		mvc.perform(
@@ -114,10 +113,9 @@ class PendingApiControllerTest {
 	
 	@Test
 	@DisplayName("Delete pending tweet, expect deleted")
-//	@WithMockUser(username = "user", password = "pass", roles = "ADMIN")
 	void deletePendingTweetTest() throws Exception {
 
-		doNothing().when(deleteUseCase).deletePendingTweet(Mockito.any());
+		doNothing().when(deleteUseCase).delete(Mockito.any());
 
 		mvc.perform(
 				delete("/api/pending/" + pendingTweet.id().id())

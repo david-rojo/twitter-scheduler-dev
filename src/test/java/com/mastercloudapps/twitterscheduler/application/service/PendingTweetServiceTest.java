@@ -99,9 +99,9 @@ public class PendingTweetServiceTest {
 	@DisplayName("Test create pending tweet with valid request")
 	void givenCreateValidRequest_expectCreatedPendingTweet() {
 		
-		when(service.createPendingTweet(createOperation)).thenReturn(pendingTweet);
+		when(service.create(createOperation)).thenReturn(pendingTweet);
 		
-		PendingTweet created = service.createPendingTweet(createOperation);
+		PendingTweet created = service.create(createOperation);
 		
 		assertThat(created, is(notNullValue()));
 		assertThat(created.id().id(), is(notNullValue()));
