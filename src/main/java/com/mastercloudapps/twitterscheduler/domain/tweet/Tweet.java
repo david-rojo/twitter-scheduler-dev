@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
 
-import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.shared.AggregateRoot;
 import com.mastercloudapps.twitterscheduler.domain.shared.Message;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -112,24 +111,14 @@ public class Tweet extends AggregateRoot<TweetId> {
 		@Override
 		public PublishedAtStep requestedPublicationDate(Instant instant) {
 			Instant reqPubDate = requireNonNull(instant, "Requested publication date cannot be null.");
-			NullableInstant niReqPubDate = new NullableInstant(reqPubDate);
-			NullableInstant niNow = NullableInstant.now();
-			if (instant.isBefore(niNow.instant())) {
-				throw new ExpiredPublicationDateException(niReqPubDate, niNow);
-			}
-			this.requestedPublicationDate = niReqPubDate;
+			this.requestedPublicationDate = new NullableInstant(reqPubDate);
 			return this;
 		}
 
 		@Override
 		public CreatedAtStep publishedAt(Instant instant) {
 			Instant pubDate = requireNonNull(instant, "published at date cannot be null.");
-			NullableInstant niPubDate = new NullableInstant(pubDate);
-			NullableInstant niNow = NullableInstant.now();
-			if (instant.isBefore(niNow.instant())) {
-				throw new ExpiredPublicationDateException(niPubDate, niNow);
-			}
-			this.publishedAt = niPubDate;
+			this.publishedAt = new NullableInstant(pubDate);;
 			return this;
 		}
 		

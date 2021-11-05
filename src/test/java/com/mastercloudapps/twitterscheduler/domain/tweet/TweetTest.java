@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
@@ -141,8 +140,6 @@ class TweetTest {
 		@DisplayName("Test creation with domain errors, expected customized domain exceptions")
 		void testDomainExceptions() {
 			assertThrows(MessageMaxLengthExceededException.class, () -> createTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));
-			assertThrows(ExpiredPublicationDateException.class, () -> createTweet(MockData.INVALID_EXPIRED_REQUESTED_PUBLICATION_DATE));
-			assertThrows(ExpiredPublicationDateException.class, () -> createTweet(MockData.INVALID_EXPIRED_PUBLISHED_AT));
 		}
 	}
 	

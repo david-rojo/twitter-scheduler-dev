@@ -9,7 +9,7 @@ public class ExpiredPublicationDateException extends RuntimeException {
 	public ExpiredPublicationDateException(NullableInstant instant, NullableInstant now) {
 		
 		super("publication date is expired. "
-				+ "Date is '" + instant.getFormatted() + "'" 
+				+ "Proposed date is '" + instant.getFormatted() + "'" 
 				+ " and current time is '" + now.getFormatted() + "'");
 	}
 
