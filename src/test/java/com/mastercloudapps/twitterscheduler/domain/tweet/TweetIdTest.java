@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.domain.pending;
+package com.mastercloudapps.twitterscheduler.domain.tweet;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,10 +13,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class PendingTweetIdTest {
+class TweetIdTest {
 
-	private PendingTweetId createPendingTweetId(MockData mockData) {
-		return PendingTweetId.valueOf(mockData.id);
+	private TweetId createTweetId(MockData mockData) {
+		return TweetId.valueOf(mockData.id);
 	}
 
 	enum MockData {
@@ -39,7 +39,7 @@ class PendingTweetIdTest {
 		@DisplayName("Test creation with null id, expected NullPointerException")
 		void testNullId() {
 
-			assertThrows(NullPointerException.class, () -> createPendingTweetId(MockData.INVALID_ID));
+			assertThrows(NullPointerException.class, () -> createTweetId(MockData.INVALID_ID));
 		}
 	}
 
@@ -47,90 +47,79 @@ class PendingTweetIdTest {
 	@DisplayName("Test plan creation")
 	class TestPlanCreation {
 
-		private PendingTweetId pendingTweetId;
+		private TweetId tweetId;
 
 		@BeforeEach
 		void setUp() {
 
-			pendingTweetId = createPendingTweetId(MockData.VALID_ID);
+			tweetId = createTweetId(MockData.VALID_ID);
 		}
 
 		@Test
 		@DisplayName("Test creation, expected not null")
 		void testNotNull() {
 
-			assertThat(pendingTweetId, is(notNullValue()));
+			assertThat(tweetId, is(notNullValue()));
 		}
 
 		@Test
 		@DisplayName("Test creation, expected id")
 		void testEqualsId() {
 
-			assertThat(pendingTweetId.id(), is(MockData.VALID_ID.id));
+			assertThat(tweetId.id(), is(MockData.VALID_ID.id));
 		}
 
 		@Test
 		@DisplayName("Test toString, expected id contained")
 		void testToString() {
 
-			assertThat(pendingTweetId.toString(), containsString(MockData.VALID_ID.id.toString()));
+			assertThat(tweetId.toString(), containsString(MockData.VALID_ID.id.toString()));
 		}		
 	}
 	
-	@Nested
-	@DisplayName("Test plan for class default values")
-	class TestPlanDefault {
-				
-		@Test
-		@DisplayName("Test defaultId, expected MAX_LONG")
-		void testToDefaultId() {
-
-			assertThat(PendingTweetId.defaultValue(), is(Long.MAX_VALUE));
-		}
-	}
 
 	@Nested
 	@DisplayName("Test plan for equals and hashcode")
 	class TestPlanEqualsHashCode {
 
-		private PendingTweetId pendingTweetId;
+		private TweetId tweetId;
 
 		@BeforeEach
 		void setUp() {
 
-			pendingTweetId = createPendingTweetId(MockData.VALID_ID);
+			tweetId = createTweetId(MockData.VALID_ID);
 		}
 
 		@Test
 		@DisplayName("Test with itself, expected equals")
 		void testEqualsItself() {
 
-			assertThat(pendingTweetId, is(pendingTweetId));
+			assertThat(tweetId, is(tweetId));
 		}
 
 		@Test
 		@DisplayName("Test with same id, expected equals and same hashcode")
 		void testSameId() {
 
-			var same = createPendingTweetId(MockData.VALID_ID);
-			assertThat(pendingTweetId, is(same));
-			assertThat(pendingTweetId.hashCode(), is(same.hashCode()));
+			var same = createTweetId(MockData.VALID_ID);
+			assertThat(tweetId, is(same));
+			assertThat(tweetId.hashCode(), is(same.hashCode()));
 		}
 
 		@Test
 		@DisplayName("Test with other null, expected not equals")
 		void testNotEqualsNull() {
 
-			assertNotEquals(null, pendingTweetId);
+			assertNotEquals(null, tweetId);
 		}
 
 		@Test
 		@DisplayName("Test with different id, expected not equals and different hashCode")
 		void testDifferentId() {
 
-			var other = createPendingTweetId(MockData.VALID_ID_OTHER);
-			assertThat(pendingTweetId, is(not(other)));
-			assertThat(pendingTweetId.hashCode(), is(not(other.hashCode())));
+			var other = createTweetId(MockData.VALID_ID_OTHER);
+			assertThat(tweetId, is(not(other)));
+			assertThat(tweetId.hashCode(), is(not(other.hashCode())));
 		}
 	}
 }

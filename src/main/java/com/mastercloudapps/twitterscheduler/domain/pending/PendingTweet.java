@@ -96,7 +96,7 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 
 		@Override
 		public CreatedAtStep publicationDate(Instant instant) {
-			Instant pubDate = requireNonNull(instant, "Publication date date cannot be null.");
+			Instant pubDate = requireNonNull(instant, "Publication date cannot be null.");
 			NullableInstant niPubDate = new NullableInstant(pubDate);
 			NullableInstant niNow = NullableInstant.now();
 			if (instant.isBefore(niNow.instant())) {
