@@ -1,8 +1,8 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -34,8 +34,8 @@ import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllP
 import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
+import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
-import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 
 @SpringBootTest
@@ -69,32 +69,15 @@ class PendingApiControllerTest {
 	@BeforeEach
 	void setup() {
 
-		Long id = (long) 1;
-		String message = "test message";
-		String publicationDate = "2023-04-01T10:00:00Z";
-		String createdAt = "2023-04-01T10:00:00Z";
-
+		pendingTweet = PendingTweetData.HAPPY_NEW_YEAR.create();
+		
+		anotherPendingTweet = PendingTweetData.MERRY_CHRISTMAS.create();
+		
 		pendingTweetRequest = PendingTweetRequest
 				.builder()
-				.message(message)
-				.publicationDate(publicationDate)
+				.message(pendingTweet.message().message())
+				.publicationDate(pendingTweet.publicationDate().instant().toString())
 				.build();
-
-		pendingTweet = PendingTweet
-				.builder()
-				.id(id)
-				.message(message)
-				.publicationDate(NullableInstant.fromUtcISO8601(publicationDate).instant())
-				.createdAt(NullableInstant.fromUtcISO8601(createdAt).instant())
-				.build();
-		
-		anotherPendingTweet = PendingTweet
-				.builder()
-				.id(2L)
-				.message("another test message")
-				.publicationDate(NullableInstant.fromUtcISO8601("2024-04-01T10:00:00Z").instant())
-				.createdAt(NullableInstant.fromUtcISO8601("2023-08-01T10:00:00Z").instant())
-				.build();		
 	}
 
 	@Test
