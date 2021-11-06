@@ -3,13 +3,15 @@ package com.mastercloudapps.twitterscheduler.controller;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindAllTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.tweet.mapper.TweetResponseMapper;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,10 +21,23 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @SecurityRequirement(name = "twitter-scheduler")
 public class TweetApiController implements TweetApi {
 
+	private final FindAllTweetUseCase findAllTweetUseCase;
+	
+	private final TweetResponseMapper responseMapper;
+	
+	public TweetApiController(final FindAllTweetUseCase findAllTweetUseCase,
+			final TweetResponseMapper responseMapper) {
+		
+		this.findAllTweetUseCase = findAllTweetUseCase;
+		this.responseMapper = responseMapper;
+	}
+	
 	@GetMapping
 	public Collection<TweetResponse> getTweets() {
 
-		return Collections.emptyList();
+		return findAllTweetUseCase.findAll().stream()
+				.map(pendingTweet -> responseMapper.mapResponse(pendingTweet))
+				.collect(Collectors.toList());	
 	}
 
 	@GetMapping("/{id}")
@@ -30,7 +45,7 @@ public class TweetApiController implements TweetApi {
 		
 		Instant now = Instant.now();
 		return TweetResponse.builder()
-				.tweetId(id)
+				.id(id)
 				.message("test message")
 //				.images(Arrays.asList(TweetImageResponse
 //						.builder()
@@ -43,8 +58,7 @@ public class TweetApiController implements TweetApi {
 				.createdAt(NullableInstant.now().getFormatted())
 				.requestedPublicationDate(
 						new NullableInstant(now.plus(20,ChronoUnit.MINUTES)).getFormatted())
-				.publishedAt(NullableInstant.now().getFormatted())
-				.updatedAt(NullableInstant.now().getFormatted())
+				.publishedAt(new NullableInstant(now.plus(21,ChronoUnit.MINUTES)).getFormatted())
 				.build();
 	}
 

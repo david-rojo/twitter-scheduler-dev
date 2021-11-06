@@ -9,12 +9,12 @@ public enum PendingTweetData {
 			1L,
 			"Happy new year!",
 			Instant.parse(Constants.PUBLICATION_DATE_NEW_YEAR_2023),
-			Instant.parse(Constants.CREATED_AT_DATE_1)),
+			Instant.parse(Constants.CREATED_AT_NEW_YEAR_2023)),
 	MERRY_CHRISTMAS(
 			1L,
 			"Merry Christmas!",
 			Instant.parse(Constants.PUBLICATION_DATE_CHRISTMAS_2024),
-			Instant.parse(Constants.CREATED_AT_DATE_2));
+			Instant.parse(Constants.CREATED_AT_CHRISTMAS_2024));
 
 	private final Long id;
 
@@ -50,9 +50,9 @@ public enum PendingTweetData {
 
 		public static final String PUBLICATION_DATE_CHRISTMAS_2024 = "2024-12-25T00:00:00Z";
 		
-		public static final String CREATED_AT_DATE_1 = "2021-10-01T00:00:00Z";
+		public static final String CREATED_AT_NEW_YEAR_2023 = "2021-10-01T00:00:00Z";
 		
-		public static final String CREATED_AT_DATE_2 = "2021-11-01T00:00:00Z";
+		public static final String CREATED_AT_CHRISTMAS_2024 = "2021-11-01T00:00:00Z";
 
 		private Constants() {}
 	}

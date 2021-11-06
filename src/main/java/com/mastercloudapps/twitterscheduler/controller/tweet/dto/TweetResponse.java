@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TweetResponse {
 
-	private Long tweetId;
+	private Long id;
 	private String message;
 //	private List<TweetImageResponse> images;
 	private String requestedPublicationDate;
 	private String publishedAt;
 	private String createdAt;
-	private String updatedAt;
 
 }

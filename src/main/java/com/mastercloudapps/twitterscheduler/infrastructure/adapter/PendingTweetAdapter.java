@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.infrastructure.pending;
+package com.mastercloudapps.twitterscheduler.infrastructure.adapter;
 
 import java.util.Collection;
 import java.util.Optional;
