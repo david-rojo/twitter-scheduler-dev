@@ -4,10 +4,13 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import com.mastercloudapps.twitterscheduler.domain.exception.RepositoryException;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
+import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaEntity;
 import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaMapper;
 import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaRepository;
 
@@ -29,13 +32,27 @@ public class TweetAdapter implements TweetPort {
 	
 	@Override
 	public Tweet create(Tweet tweet) {
-		// TODO Auto-generated method stub
-		return null;
+
+		try {
+			TweetJpaEntity tweetJpaEntity = mapper.mapDomainObject(tweet);			
+			tweetJpaRepository.save(tweetJpaEntity);
+			
+			TweetJpaEntity tweetJpaResponse = tweetJpaRepository
+					.findById(tweetJpaEntity.getId())
+					.orElseThrow();
+			
+			return mapper.mapEntity(tweetJpaResponse);
+			
+		} catch (DataAccessException ex) {
+
+			throw new RepositoryException(DATA_ACCESS_ERROR, ex);
+		}
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		
+		tweetJpaRepository.deleteById(id);
 		
 	}
 
