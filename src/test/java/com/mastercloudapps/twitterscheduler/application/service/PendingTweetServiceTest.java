@@ -108,8 +108,8 @@ public class PendingTweetServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find one pending tweet with valid request")
-	void givenFindOneValidRequest_expectPendingTweet() {
+	@DisplayName("Test find one pending tweet with existing valid request")
+	void givenFindOneExistingValidRequest_expectPendingTweet() {
 		
 		when(service.findOne(findOneOperation)).thenReturn(Optional.of(pendingTweet));
 		
@@ -122,8 +122,16 @@ public class PendingTweetServiceTest {
 		assertEquals(pendingTweetResponse.get().message().message(), pendingTweet.message().message());
 	}
 	
-	
-	
-	
+	@Test
+	@DisplayName("Test find one pending tweet with not existing valid request")
+	void givenFindOneNotExistingValidRequest_expectEmpty() {
+		
+		when(service.findOne(findOneOperation)).thenReturn(Optional.empty());
+		
+		var pendingTweetResponse = service.findOne(findOneOperation);
+		
+		assertThat(pendingTweetResponse, is(notNullValue()));
+		assertThat(pendingTweetResponse.isPresent(), is(false));
+	}	
 
 }

@@ -79,8 +79,8 @@ public class TweetServiceTest {
 	}
 	
 	@Test
-	@DisplayName("Test find one tweet with valid request")
-	void givenFindOneValidRequest_expectTweet() {
+	@DisplayName("Test find one tweet with existing valid request")
+	void givenFindOneExistingValidRequest_expectTweet() {
 		
 		when(service.findOne(findOneOperation)).thenReturn(Optional.of(tweet));
 		
@@ -91,6 +91,18 @@ public class TweetServiceTest {
 		assertThat(tweetResponse.get(), instanceOf(Tweet.class));
 		assertEquals(tweetResponse.get().id().id(), tweet.id().id());
 		assertEquals(tweetResponse.get().message().message(), tweet.message().message());
+	}
+	
+	@Test
+	@DisplayName("Test find one tweet with not existing valid request")
+	void givenFindOneNotExistingValidRequest_expectEmpty() {
+		
+		when(service.findOne(findOneOperation)).thenReturn(Optional.empty());
+		
+		var tweetResponse = service.findOne(findOneOperation);
+		
+		assertThat(tweetResponse, is(notNullValue()));
+		assertThat(tweetResponse.isPresent(), is(false));
 	}
 	
 	

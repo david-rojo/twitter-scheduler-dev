@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,8 +76,8 @@ class TweetApiControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Find one tweet by id, expect pending tweet")
-	void findOneTweetTest() throws Exception {
+	@DisplayName("Find one tweet by id with existing, expect pending tweet")
+	void findOneTweetWithExistingTest() throws Exception {
 		
 		when(findOneUseCase.findOne(any())).thenReturn(Optional.of(tweet));
 		
@@ -87,5 +88,18 @@ class TweetApiControllerTest {
 	    	.andExpect(status().isOk())
 	    	.andExpect(jsonPath("$.id", equalTo(Math.toIntExact(tweet.id().id()))))
 	    	.andExpect(jsonPath("$.message", equalTo(tweet.message().message())));
+	}
+	
+	@Test
+	@DisplayName("Find one tweet by id with not existing, expect not found")
+	void findOneTweetWithNotExistingTest() throws Exception {
+		
+		when(findOneUseCase.findOne(any())).thenReturn(Optional.empty());
+		
+		mvc.perform(
+	    		get("/api/tweets/" + new Random().nextLong())
+	    		.contentType(MediaType.APPLICATION_JSON)
+	    	)
+	    	.andExpect(status().isNotFound());
 	}
 }
