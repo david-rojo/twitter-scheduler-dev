@@ -2,12 +2,14 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindAllTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindOneTweetUseCase;
 import com.mastercloudapps.twitterscheduler.domain.mocks.TweetData;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 
@@ -35,6 +38,9 @@ class TweetApiControllerTest {
 	
 	@MockBean
 	private FindAllTweetUseCase findAllUseCase;
+	
+	@MockBean
+	private FindOneTweetUseCase findOneUseCase;
 	
 	private Tweet tweet;
 	
@@ -68,4 +74,18 @@ class TweetApiControllerTest {
 	    	.andExpect(jsonPath("$[1].message", equalTo(anotherTweet.message().message())));	    	
 	}
 	
+	@Test
+	@DisplayName("Find one tweet by id, expect pending tweet")
+	void findOneTweetTest() throws Exception {
+		
+		when(findOneUseCase.findOne(any())).thenReturn(Optional.of(tweet));
+		
+		mvc.perform(
+	    		get("/api/tweets/" + tweet.id().id())
+	    		.contentType(MediaType.APPLICATION_JSON)
+	    	)
+	    	.andExpect(status().isOk())
+	    	.andExpect(jsonPath("$.id", equalTo(Math.toIntExact(tweet.id().id()))))
+	    	.andExpect(jsonPath("$.message", equalTo(tweet.message().message())));
+	}
 }

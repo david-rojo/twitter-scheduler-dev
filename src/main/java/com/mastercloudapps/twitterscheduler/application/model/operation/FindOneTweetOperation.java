@@ -12,8 +12,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class FindOnePendingTweetOperation implements Operation {
-	
+public class FindOneTweetOperation implements Operation {
+
 	private static final long serialVersionUID = 4005439245053292442L;
 	
 	@NonNull

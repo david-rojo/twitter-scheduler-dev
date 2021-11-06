@@ -1,18 +1,19 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindAllTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindOneTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.tweet.mapper.FindOneTweetRequestMapper;
 import com.mastercloudapps.twitterscheduler.controller.tweet.mapper.TweetResponseMapper;
-import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -23,13 +24,20 @@ public class TweetApiController implements TweetApi {
 
 	private final FindAllTweetUseCase findAllTweetUseCase;
 	
+	private final FindOneTweetUseCase findOneTweetUseCase;
+	
+	private final FindOneTweetRequestMapper findOneTweetRequestMapper;
+	
 	private final TweetResponseMapper responseMapper;
 	
 	public TweetApiController(final FindAllTweetUseCase findAllTweetUseCase,
-			final TweetResponseMapper responseMapper) {
+			final TweetResponseMapper responseMapper, final FindOneTweetUseCase findOneTweetUseCase,
+			final FindOneTweetRequestMapper findOneTweetRequestMapper) {
 		
 		this.findAllTweetUseCase = findAllTweetUseCase;
 		this.responseMapper = responseMapper;
+		this.findOneTweetUseCase = findOneTweetUseCase;
+		this.findOneTweetRequestMapper = findOneTweetRequestMapper;
 	}
 	
 	@GetMapping
@@ -41,25 +49,16 @@ public class TweetApiController implements TweetApi {
 	}
 
 	@GetMapping("/{id}")
-	public TweetResponse getTweetById(Long id) {
+	public ResponseEntity<TweetResponse> getTweetById(Long id) {
 		
-		Instant now = Instant.now();
-		return TweetResponse.builder()
-				.id(id)
-				.message("test message")
-//				.images(Arrays.asList(TweetImageResponse
-//						.builder()
-//						.tweetImageId(1453486161003954183L)
-//						.type("image/jpeg")
-//						.size(50734L)
-//						.height(512)
-//						.width(512)
-//						.build()))
-				.createdAt(NullableInstant.now().getFormatted())
-				.requestedPublicationDate(
-						new NullableInstant(now.plus(20,ChronoUnit.MINUTES)).getFormatted())
-				.publishedAt(new NullableInstant(now.plus(21,ChronoUnit.MINUTES)).getFormatted())
-				.build();
+		final var tweet = findOneTweetUseCase.findOne(
+				findOneTweetRequestMapper.mapRequest(id));
+		
+		if(tweet.isPresent()) {
+			return new ResponseEntity<>(responseMapper.mapResponse(tweet.get()), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

@@ -6,11 +6,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,9 +23,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.mastercloudapps.twitterscheduler.application.model.operation.CreatePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.application.model.operation.FindOnePendingTweetOperation;
+import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
-import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 @ExtendWith(MockitoExtension.class)
 public class PendingTweetServiceTest {
@@ -53,45 +50,21 @@ public class PendingTweetServiceTest {
 		
 		this.service = new PendingTweetService(pendingTweetPort);
 		
-		Long id = 1L;
-		String message = "test message";
-		NullableInstant publicationDate = new NullableInstant(Instant
-				.now()
-				.plus(20,ChronoUnit.MINUTES));
-		NullableInstant createdAt = NullableInstant.now();
+		this.pendingTweet = PendingTweetData.HAPPY_NEW_YEAR.create();
+		
+		this.anotherPendingTweet = PendingTweetData.MERRY_CHRISTMAS.create();
 		
 		this.createOperation = CreatePendingTweetOperation.builder()
-				.message(message)
-				.publicationDate(publicationDate)
+				.message(pendingTweet.message().message())
+				.publicationDate(pendingTweet.publicationDate())
 				.build();
 		
 		this.deleteOperation = DeletePendingTweetOperation.builder()
-				.id(id)
+				.id(pendingTweet.id().id())
 				.build();
 		
 		this.findOneOperation = FindOnePendingTweetOperation.builder()
-				.id(id)
-				.build();
-		
-		this.pendingTweet = PendingTweet.builder()
-				.id(id)
-				.message(message)
-				.publicationDate(publicationDate.instant())
-				.createdAt(createdAt.instant())
-				.build();
-		
-		Long anotherId = 2L;
-		String anotherMessage = "another test message";
-		NullableInstant anotherPublicationDate = new NullableInstant(Instant
-				.now()
-				.plus(30,ChronoUnit.MINUTES));
-		NullableInstant anotherCreatedAt = NullableInstant.now();
-		
-		this.anotherPendingTweet = PendingTweet.builder()
-				.id(anotherId)
-				.message(anotherMessage)
-				.publicationDate(anotherPublicationDate.instant())
-				.createdAt(anotherCreatedAt.instant())
+				.id(pendingTweet.id().id())
 				.build();
 	}
 	

@@ -49,8 +49,13 @@ public class TweetAdapter implements TweetPort {
 
 	@Override
 	public Optional<Tweet> findOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		final var tweetJpa = tweetJpaRepository.findById(id);
+
+		if (tweetJpa.isPresent()) {
+			return Optional.of(mapper.mapEntity(tweetJpa.get()));
+		}
+		return Optional.empty();
 	}
 
 }
