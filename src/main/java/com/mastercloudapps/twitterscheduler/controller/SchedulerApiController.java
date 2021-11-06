@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mastercloudapps.twitterscheduler.application.usecase.scheduler.GetSchedulerStatusUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerStatusUseCase;
 import com.mastercloudapps.twitterscheduler.controller.scheduler.dto.SchedulerResponse;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

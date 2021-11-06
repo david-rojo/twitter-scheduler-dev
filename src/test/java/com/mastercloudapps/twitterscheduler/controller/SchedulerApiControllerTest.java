@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.mastercloudapps.twitterscheduler.application.usecase.scheduler.GetSchedulerStatusUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerStatusUseCase;
 
 @SpringBootTest
 @AutoConfigureMockMvc

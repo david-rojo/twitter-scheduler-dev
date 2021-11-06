@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.application.model.operation.FindOneTweetOperation;
-import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindAllTweetUseCase;
-import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindOneTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindAllTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindOneTweetUseCase;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
 

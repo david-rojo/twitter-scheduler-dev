@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 
-import com.mastercloudapps.twitterscheduler.application.usecase.scheduler.GetSchedulerStatusUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerStatusUseCase;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 
 @Component

@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.application.usecase.pending;
+package com.mastercloudapps.twitterscheduler.application.usecase;
 
 import java.util.Optional;
 

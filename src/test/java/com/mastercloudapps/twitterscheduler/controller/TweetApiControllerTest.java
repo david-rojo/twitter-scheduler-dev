@@ -24,8 +24,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindAllTweetUseCase;
-import com.mastercloudapps.twitterscheduler.application.usecase.tweet.FindOneTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindAllTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindOneTweetUseCase;
 import com.mastercloudapps.twitterscheduler.domain.mocks.TweetData;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 

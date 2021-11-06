@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.application.usecase.scheduler;
+package com.mastercloudapps.twitterscheduler.application.usecase;
 
 public interface GetSchedulerStatusUseCase {
 

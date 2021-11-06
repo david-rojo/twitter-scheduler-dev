@@ -29,10 +29,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mastercloudapps.twitterscheduler.application.usecase.pending.CreatePendingTweetUseCase;
-import com.mastercloudapps.twitterscheduler.application.usecase.pending.DeletePendingTweetUseCase;
-import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindAllPendingTweetUseCase;
-import com.mastercloudapps.twitterscheduler.application.usecase.pending.FindOnePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.CreatePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.DeletePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
