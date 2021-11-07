@@ -35,8 +35,8 @@ import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTw
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
-import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
+import com.mastercloudapps.twitterscheduler.mocks.PendingTweetData;
 
 
 @SpringBootTest

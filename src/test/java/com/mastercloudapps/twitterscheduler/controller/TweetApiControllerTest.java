@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.mastercloudapps.twitterscheduler.application.usecase.FindAllTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOneTweetUseCase;
-import com.mastercloudapps.twitterscheduler.domain.mocks.TweetData;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
+import com.mastercloudapps.twitterscheduler.mocks.TweetData;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -23,9 +23,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.mastercloudapps.twitterscheduler.application.model.operation.CreatePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.application.model.operation.FindOnePendingTweetOperation;
-import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
+import com.mastercloudapps.twitterscheduler.mocks.PendingTweetData;
 
 @ExtendWith(MockitoExtension.class)
 public class PendingTweetServiceTest {

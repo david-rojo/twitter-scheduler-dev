@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.domain.mocks;
+package com.mastercloudapps.twitterscheduler.mocks;
 
 import java.time.Instant;
 
@@ -20,9 +20,9 @@ public enum PendingTweetData {
 
 	private final String message;
 
-	private Instant publicationDate;
+	private final Instant publicationDate;
 	
-	private Instant createdAt;
+	private final Instant createdAt;
 
 	PendingTweetData(final Long id, final String message, final Instant publicationDate,
 			final Instant createdAt) {

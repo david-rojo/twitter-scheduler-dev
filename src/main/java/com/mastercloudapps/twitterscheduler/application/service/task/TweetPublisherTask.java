@@ -13,27 +13,29 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.togglz.core.manager.FeatureManager;
 
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
-import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 @Configuration
 @EnableScheduling
 @EnableAsync
-public class PublisherTask {
+public class TweetPublisherTask {
 
-	private static Logger logger = LoggerFactory.getLogger(PublisherTask.class);
+	private static final String ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION = "Error executing TweetPublisherTask ";
+	
+	private static Logger logger = LoggerFactory.getLogger(TweetPublisherTask.class);
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	private FeatureManager featureManager;
 
-	public PublisherTask(FeatureManager featureManager) {
+	public TweetPublisherTask(FeatureManager featureManager) {
 		this.featureManager = featureManager;
 	}
 
 	@Async
-	@Scheduled(fixedRateString = "PT20S")
+	@Scheduled(fixedRateString = "${scheduler.frequency}", initialDelayString = "${scheduler.initial.delay}")
 	public void execute() {
 
+		
 		if(featureManager.isActive(Features.SCHEDULER)) {
 			logger.info("The time is now {}", dateFormat.format(new Date()));
 		} else {

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import com.mastercloudapps.twitterscheduler.domain.mocks.PendingTweetData;
+import com.mastercloudapps.twitterscheduler.mocks.PendingTweetData;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PendingTweetJpaMapperTest {

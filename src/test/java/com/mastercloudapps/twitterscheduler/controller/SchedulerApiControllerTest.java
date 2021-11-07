@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerStatusUseCase;
+import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerInfo;
+import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerInfoUseCase;
+import com.mastercloudapps.twitterscheduler.mocks.SchedulerInfoData;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -26,16 +31,28 @@ class SchedulerApiControllerTest {
 	private MockMvc mvc;
 
 	@MockBean
-	private GetSchedulerStatusUseCase getSchedulerStatusTweetUseCase;
+	private GetSchedulerInfoUseCase getSchedulerInfoUseCase;
+	
+	private SchedulerInfo activeSchedulerInfo;
+
+	private SchedulerInfo inactiveSchedulerInfo;
+	
+	@BeforeEach
+	public void beforeEach() {
+
+		this.activeSchedulerInfo = SchedulerInfoData.ACTIVE.create();
+
+		this.inactiveSchedulerInfo = SchedulerInfoData.INACTIVE.create();
+	}
 	
 	@Test
-	@DisplayName("Get scheduler status when active, expect true")
+	@DisplayName("Get scheduler info when active, expect configuration with active true")
 	void getSchedulerStatusWhenActive() throws Exception {
 		
-		when(getSchedulerStatusTweetUseCase.getStatus()).thenReturn(true);
+		when(getSchedulerInfoUseCase.getInfo()).thenReturn(Optional.of(activeSchedulerInfo));
 		
 		mvc.perform(
-	    		get("/api/scheduler/status")
+	    		get("/api/scheduler/info")
 	    		.contentType(MediaType.APPLICATION_JSON)
 	    	)
 	    	.andExpect(status().isOk())
@@ -43,13 +60,13 @@ class SchedulerApiControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Get scheduler status when not active, expect false")
+	@DisplayName("Get scheduler status when not active, expect configuration with active false")
 	void getSchedulerStatusWhenNotActive() throws Exception {
 		
-		when(getSchedulerStatusTweetUseCase.getStatus()).thenReturn(false);
+		when(getSchedulerInfoUseCase.getInfo()).thenReturn(Optional.of(inactiveSchedulerInfo));
 		
 		mvc.perform(
-	    		get("/api/scheduler/status")
+	    		get("/api/scheduler/info")
 	    		.contentType(MediaType.APPLICATION_JSON)
 	    	)
 	    	.andExpect(status().isOk())

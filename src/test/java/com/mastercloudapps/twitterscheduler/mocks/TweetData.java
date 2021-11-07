@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.domain.mocks;
+package com.mastercloudapps.twitterscheduler.mocks;
 
 import java.time.Instant;
 
@@ -22,11 +22,11 @@ public enum TweetData {
 
 	private final String message;
 
-	private Instant requestedPublicationDate;
+	private final Instant requestedPublicationDate;
 	
-	private Instant publishedAt;
+	private final Instant publishedAt;
 	
-	private Instant createdAt;
+	private final Instant createdAt;
 
 	TweetData(final Long id, final String message, final Instant requestedPublicationDate,
 			final Instant publishedAt, final Instant createdAt) {

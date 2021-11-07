@@ -21,9 +21,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.mastercloudapps.twitterscheduler.application.model.operation.FindOneTweetOperation;
-import com.mastercloudapps.twitterscheduler.domain.mocks.TweetData;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
+import com.mastercloudapps.twitterscheduler.mocks.TweetData;
 
 @ExtendWith(MockitoExtension.class)
 public class TweetServiceTest {
