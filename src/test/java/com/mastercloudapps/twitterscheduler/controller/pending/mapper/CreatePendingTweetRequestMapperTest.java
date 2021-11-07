@@ -66,7 +66,7 @@ class CreatePendingTweetRequestMapperTest {
 		}
 
 		@Test
-		void mapQueryRequest_whenTitleNull_shouldReturnException() {
+		void mapQueryRequest_whenMessageNull_shouldReturnException() {
 
 			assertMapperThrowsException(InvalidInputException.class, MockData.REQUEST_WITHOUT_MESSAGE);
 		}

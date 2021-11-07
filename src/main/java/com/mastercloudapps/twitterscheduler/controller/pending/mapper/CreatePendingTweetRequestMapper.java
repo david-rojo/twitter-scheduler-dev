@@ -20,7 +20,7 @@ public class CreatePendingTweetRequestMapper {
 
 		final var message = this.mapMessage(request);
 		final var publicationDate = this.mapPublicationDate(request);
-		
+
 		return CreatePendingTweetOperation
 				.builder()
 				.message(message)
@@ -35,7 +35,7 @@ public class CreatePendingTweetRequestMapper {
 		}
 		return request.getMessage();
 	}
-	
+
 	private NullableInstant mapPublicationDate(final PendingTweetRequest request) {
 
 		if (request.getPublicationDate().equalsIgnoreCase("")) {

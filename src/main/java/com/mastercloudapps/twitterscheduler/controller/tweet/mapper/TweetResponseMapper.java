@@ -1,9 +1,12 @@
 package com.mastercloudapps.twitterscheduler.controller.tweet.mapper;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
-import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
+import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 
 @Component
@@ -11,14 +14,50 @@ public class TweetResponseMapper {
 
 	public TweetResponse mapResponse(Tweet tweet) {
 		
+		if (Optional.ofNullable(tweet).isEmpty()) {
+			throw new InvalidInputException("Invalid payload");
+		}
+		
+		final var id = this.mapId(tweet);
+		final var message = this.mapMessage(tweet);
+		final var requestedPublicationDate = this.mapRequestedPublicationDate(tweet);
+		final var publishedAt = this.mapPublishedAt(tweet);
+		final var createdAt = this.mapCreatedAt(tweet);
+		
 		var responseBuilder = TweetResponse
 				.builder()
-				.id(tweet.id().id())
-				.message(tweet.message().message())
-				.requestedPublicationDate(tweet.requestedPublicationDate().getFormatted())
-				.publishedAt(tweet.publishedAt().getFormatted())
-				.createdAt(tweet.createdAt().getFormatted());
+				.id(id)
+				.message(message)
+				.requestedPublicationDate(requestedPublicationDate)
+				.publishedAt(publishedAt)
+				.createdAt(createdAt);
 		
 		return responseBuilder.build();
+	}
+	
+	
+	private Long mapId(final Tweet request) {
+
+		return request.id().id();
+	}
+	
+	private String mapMessage(final Tweet request) {
+
+		return request.message().message();
+	}
+
+	private String mapRequestedPublicationDate(final Tweet request) {
+
+		return request.requestedPublicationDate().getFormatted();
+	}
+	
+	private String mapPublishedAt(final Tweet request) {
+
+		return request.publishedAt().getFormatted();
+	}
+	
+	private String mapCreatedAt(final Tweet request) {
+
+		return request.createdAt().getFormatted();
 	}
 }

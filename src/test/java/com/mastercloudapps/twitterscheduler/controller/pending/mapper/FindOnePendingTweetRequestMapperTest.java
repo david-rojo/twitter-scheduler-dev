@@ -63,7 +63,7 @@ class FindOnePendingTweetRequestMapperTest {
 		@Test
 		void mapAllAttributesIsOk() {
 
-			final var findOnePendingTweetOperation = mapper.mapRequest(MockData.VALID_REQUEST.id);
+			final var findOnePendingTweetOperation = mapper.mapRequest(buildRequest(MockData.VALID_REQUEST).getId());
 
 			assertThat(findOnePendingTweetOperation, is(notNullValue()));
 			assertThat(findOnePendingTweetOperation.getId(), is(MockData.VALID_REQUEST.id));
