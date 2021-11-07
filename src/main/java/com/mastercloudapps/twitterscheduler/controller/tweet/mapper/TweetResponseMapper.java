@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
-import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 
 @Component

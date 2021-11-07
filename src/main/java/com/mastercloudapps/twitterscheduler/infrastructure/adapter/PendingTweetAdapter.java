@@ -1,5 +1,6 @@
 package com.mastercloudapps.twitterscheduler.infrastructure.adapter;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,6 +74,14 @@ public class PendingTweetAdapter implements PendingTweetPort {
 			return Optional.of(mapper.mapEntity(pendingTweetJpa.get()));
 		}
 		return Optional.empty();
+	}
+
+	@Override
+	public Collection<PendingTweet> findPendingForPublish(Instant date) {
+		
+		return pendingTweetJpaRepository.findPendingForPublish(date).stream()
+				.map(entity -> mapper.mapEntity(entity))
+				.collect(Collectors.toList());
 	}
 
 }

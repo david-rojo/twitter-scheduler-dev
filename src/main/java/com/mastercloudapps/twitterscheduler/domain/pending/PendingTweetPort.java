@@ -1,5 +1,6 @@
 package com.mastercloudapps.twitterscheduler.domain.pending;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -12,5 +13,7 @@ public interface PendingTweetPort {
 	public Collection<PendingTweet> findAll();
 	
 	public Optional<PendingTweet> findOne(Long id);
+	
+	public Collection<PendingTweet> findPendingForPublish(Instant date);
 
 }
