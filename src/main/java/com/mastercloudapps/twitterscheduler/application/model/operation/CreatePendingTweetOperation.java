@@ -1,6 +1,5 @@
 package com.mastercloudapps.twitterscheduler.application.model.operation;
 
-import com.mastercloudapps.twitterscheduler.application.model.shared.Operation;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 import lombok.Builder;

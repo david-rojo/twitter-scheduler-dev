@@ -15,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.togglz.core.manager.FeatureManager;
 
+import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
 import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerInfo;
-import com.mastercloudapps.twitterscheduler.application.service.task.SchedulerConfiguration;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.mocks.SchedulerInfoData;
 

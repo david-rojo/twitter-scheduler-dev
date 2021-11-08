@@ -1,7 +1,5 @@
 package com.mastercloudapps.twitterscheduler.application.model.operation;
 
-import com.mastercloudapps.twitterscheduler.application.model.shared.Operation;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

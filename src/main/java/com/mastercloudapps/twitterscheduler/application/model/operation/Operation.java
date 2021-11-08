@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.application.model.shared;
+package com.mastercloudapps.twitterscheduler.application.model.operation;
 
 import java.io.Serializable;
 

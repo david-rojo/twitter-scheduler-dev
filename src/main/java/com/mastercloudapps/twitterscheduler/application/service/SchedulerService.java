@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.togglz.core.manager.FeatureManager;
 
+import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
 import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerInfo;
-import com.mastercloudapps.twitterscheduler.application.service.task.SchedulerConfiguration;
 import com.mastercloudapps.twitterscheduler.application.usecase.GetSchedulerInfoUseCase;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
+import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 
 @Component
 public class SchedulerService implements GetSchedulerInfoUseCase {
@@ -31,7 +32,7 @@ public class SchedulerService implements GetSchedulerInfoUseCase {
 	@Override
 	public Optional<SchedulerInfo> getInfo() {
 		
-//		try {
+		try {
 			SchedulerInfo info = SchedulerInfo.builder()
 					.active(featureManager.isActive(Features.SCHEDULER))
 					.fixedRate(Long.parseLong(schedulerConfiguration.getFixedRate()))
@@ -39,9 +40,9 @@ public class SchedulerService implements GetSchedulerInfoUseCase {
 					.build();
 			return Optional.of(info);
 
-//		} catch (Exception e) {
-//			throw new ServiceException(ERR_MSG_GETTING_SCHEDULER_INFO, e);
-//		}
+		} catch (Exception e) {
+			throw new ServiceException(ERR_MSG_GETTING_SCHEDULER_INFO, e);
+		}
 	}
 
 }
