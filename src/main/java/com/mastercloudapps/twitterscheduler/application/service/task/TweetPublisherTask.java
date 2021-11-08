@@ -12,7 +12,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.togglz.core.manager.FeatureManager;
 
+import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
+import com.mastercloudapps.twitterscheduler.application.service.PublisherService;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
+import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 
 @Configuration
 @EnableScheduling
@@ -26,20 +29,32 @@ public class TweetPublisherTask {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	private FeatureManager featureManager;
+	
+	private PublisherService service;
+	
+	private SchedulerConfiguration schedulerConfiguration;
 
-	public TweetPublisherTask(FeatureManager featureManager) {
+	public TweetPublisherTask(FeatureManager featureManager, PublisherService service,
+			SchedulerConfiguration schedulerConfiguration) {
+		
 		this.featureManager = featureManager;
+		this.service = service;
+		this.schedulerConfiguration = schedulerConfiguration;
 	}
 
 	@Async
 	@Scheduled(fixedRateString = "${scheduler.frequency}", initialDelayString = "${scheduler.initial.delay}")
 	public void execute() {
 
-		
 		if(featureManager.isActive(Features.SCHEDULER)) {
-			logger.info("The time is now {}", dateFormat.format(new Date()));
+			try {
+				logger.info("The time is now {}", dateFormat.format(new Date()));
+				service.publishPendingTweets(schedulerConfiguration.publishUntil());
+			} catch (Exception e) {
+				throw new ServiceException(ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION, e);
+			}
 		} else {
-			logger.info("Feature not active {}", dateFormat.format(new Date()));
+				logger.info("Feature not active {}", dateFormat.format(new Date()));
 		}
 	}
 
