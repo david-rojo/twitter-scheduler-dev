@@ -74,6 +74,18 @@ class PendingTweetIdTest {
 		void testToString() {
 
 			assertThat(pendingTweetId.toString(), containsString(MockData.VALID_ID.id.toString()));
+		}		
+	}
+	
+	@Nested
+	@DisplayName("Test plan for class default values")
+	class TestPlanDefault {
+				
+		@Test
+		@DisplayName("Test defaultId, expected MAX_LONG")
+		void testToDefaultId() {
+
+			assertThat(PendingTweetId.defaultValue(), is(Long.MAX_VALUE));
 		}
 	}
 

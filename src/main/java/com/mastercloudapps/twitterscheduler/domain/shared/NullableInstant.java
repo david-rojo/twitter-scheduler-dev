@@ -3,7 +3,10 @@ package com.mastercloudapps.twitterscheduler.domain.shared;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -12,6 +15,9 @@ public class NullableInstant implements ValueObject {
 	private static final Instant MIN = LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC);
 
 	private static final Instant MAX = LocalDateTime.of(3000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC);
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+		    .withZone( ZoneId.of("UTC"));
 
 	private static final long serialVersionUID = -9112461170257956003L;
 
@@ -77,6 +83,11 @@ public class NullableInstant implements ValueObject {
 	public Instant instant() {
 
 		return instant;
+	}
+	
+	public String getFormatted() {
+		
+		return formatter.format(instant); 
 	}
 
 	@Override

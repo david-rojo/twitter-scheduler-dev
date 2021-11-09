@@ -7,6 +7,8 @@ import com.mastercloudapps.twitterscheduler.domain.shared.id.DomainObjectId;
 public class PendingTweetId extends DomainObjectId<Long> {
 
 	private static final long serialVersionUID = -1922663636770629060L;
+	
+	private static final Long DEFAULT_VALUE = Long.MAX_VALUE;
 
 	private PendingTweetId(final Long id) {
 		super(id);
@@ -38,5 +40,8 @@ public class PendingTweetId extends DomainObjectId<Long> {
 		return Objects.hash(id);
 	}
 
+	public static Long defaultValue() {
+		return DEFAULT_VALUE;
+	}
 
 }
