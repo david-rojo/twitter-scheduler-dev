@@ -13,6 +13,7 @@ public class TweetResponse {
 
 	private Long id;
 	private String message;
+	private String url;
 //	private List<TweetImageResponse> images;
 	private String requestedPublicationDate;
 	private String publishedAt;

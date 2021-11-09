@@ -17,5 +17,7 @@ public class PublishTweetResponse {
 	
 	private String message;
 	
+	private String url;
+	
 	private Instant publishedAt;
 }

@@ -61,6 +61,7 @@ public class PublisherService implements PublishPendingTweetsUseCase {
 				tweetPort.create(Tweet.builder()
 						.id(published.getId())
 						.message(published.getMessage())
+						.url(published.getUrl())
 						.requestedPublicationDate(pending.publicationDate().instant())
 						.publishedAt(published.getPublishedAt())
 						.createdAt(NullableInstant.now().instant())

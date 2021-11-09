@@ -37,6 +37,8 @@ public class TwitterServiceImpl implements TwitterService {
 		try {
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
 			Status status = twitter.updateStatus(statusUpdate);
+			String url = "https://twitter.com/" + status.getUser().getScreenName()
+					+ "/status/" + status.getId(); 
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())

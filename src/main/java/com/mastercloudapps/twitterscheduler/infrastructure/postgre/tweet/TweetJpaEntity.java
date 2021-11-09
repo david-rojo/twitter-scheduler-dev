@@ -26,6 +26,9 @@ public class TweetJpaEntity {
 	@Column(columnDefinition="TEXT")
 	private String message;
 	
+	@Column(columnDefinition="TEXT")
+	private String url;
+	
 	private Instant requestedPublicationDate;
 	
 	private Instant publishedAt;

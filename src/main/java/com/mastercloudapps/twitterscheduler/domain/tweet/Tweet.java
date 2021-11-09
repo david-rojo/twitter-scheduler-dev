@@ -7,12 +7,15 @@ import java.time.Instant;
 import com.mastercloudapps.twitterscheduler.domain.shared.AggregateRoot;
 import com.mastercloudapps.twitterscheduler.domain.shared.Message;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
+import com.mastercloudapps.twitterscheduler.domain.shared.Url;
 
 public class Tweet extends AggregateRoot<TweetId> {
 	
 	private static final long serialVersionUID = 2394451305012148462L;
 
 	private Message message;
+	
+	private Url url;
 
 	private NullableInstant requestedPublicationDate;
 	
@@ -23,6 +26,7 @@ public class Tweet extends AggregateRoot<TweetId> {
 	private Tweet(final Builder builder) {
 		super(builder.tweetId);
 		this.message = builder.message;
+		this.url = builder.url;
 		this.requestedPublicationDate = builder.requestedPublicationDate;
 		this.publishedAt = builder.publishedAt;
 		this.createdAt = builder.createdAt;
@@ -31,6 +35,11 @@ public class Tweet extends AggregateRoot<TweetId> {
 	public Message message() {
 
 		return message;
+	}
+	
+	public Url url() {
+
+		return url;
 	}
 
 	public NullableInstant requestedPublicationDate() {
@@ -60,9 +69,14 @@ public class Tweet extends AggregateRoot<TweetId> {
 
 	public interface MessageStep {
 
-		RequestedPublicationDateStep message(final String message);
+		UrlStep message(final String message);
 	}
 
+	public interface UrlStep {
+
+		RequestedPublicationDateStep url(final String url);
+	}
+	
 	public interface RequestedPublicationDateStep {
 
 		PublishedAtStep requestedPublicationDate(final Instant instant);
@@ -83,12 +97,14 @@ public class Tweet extends AggregateRoot<TweetId> {
 		Tweet build();
 	}
 
-	public static class Builder implements IdStep, MessageStep, RequestedPublicationDateStep,
-		PublishedAtStep, CreatedAtStep, Build {
+	public static class Builder implements IdStep, MessageStep, UrlStep, 
+		RequestedPublicationDateStep, PublishedAtStep, CreatedAtStep, Build {
 
 		private TweetId tweetId;
 
 		private Message message;
+		
+		private Url url;
 
 		private NullableInstant requestedPublicationDate;
 		
@@ -103,8 +119,14 @@ public class Tweet extends AggregateRoot<TweetId> {
 		}
 
 		@Override
-		public RequestedPublicationDateStep message(String message) {
+		public UrlStep message(String message) {
 			this.message = Message.valueOf(requireNonNull(message, "Message cannot be null."));
+			return this;
+		}
+		
+		@Override
+		public RequestedPublicationDateStep url(String url) {
+			this.url = Url.valueOf(requireNonNull(url, "Url cannot be null."));
 			return this;
 		}
 
@@ -118,7 +140,7 @@ public class Tweet extends AggregateRoot<TweetId> {
 		@Override
 		public CreatedAtStep publishedAt(Instant instant) {
 			Instant pubDate = requireNonNull(instant, "published at date cannot be null.");
-			this.publishedAt = new NullableInstant(pubDate);;
+			this.publishedAt = new NullableInstant(pubDate);
 			return this;
 		}
 		

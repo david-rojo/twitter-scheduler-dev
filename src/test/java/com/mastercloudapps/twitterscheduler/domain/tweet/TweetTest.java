@@ -26,6 +26,7 @@ class TweetTest {
 		return Tweet.builder()
 				.id(mockData.tweetId)
 				.message(mockData.message)
+				.url(mockData.url)
 				.requestedPublicationDate(mockData.requestedPublicationDate)
 				.publishedAt(mockData.publishedAt)
 				.createdAt(mockData.createdAt)
@@ -36,29 +37,41 @@ class TweetTest {
 		VALID(
 				1L,
 				"valid message 1",
+				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2030, 1, 1, 0, 3).toInstant(ZoneOffset.UTC),
 				NullableInstant.now().instant()),
 		VALID_OTHER_SAME_ID(
 				1L, 
 				"valid message 2",
+				"https://twitter.com/username/status/123456798",
 				LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				NullableInstant.now().instant()),
 		VALID_OTHER_DIFFERENT_ID(
 				2L, 
 				"valid message 3", 
+				"https://twitter.com/username/status/123456897",
 				LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2032, 1, 1, 0, 4).toInstant(ZoneOffset.UTC),
 				NullableInstant.now().instant()),
 		INVALID_NULL_ID(
 				null, 
 				"abc",
+				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				Instant.MAX,
 				NullableInstant.now().instant()),
 		INVALID_NULL_MESSAGE(
 				1L,
+				null,
+				"https://twitter.com/username/status/123456789",
+				Instant.MAX,
+				Instant.MAX,
+				NullableInstant.now().instant()),
+		INVALID_NULL_URL(
+				1L,
+				"nmo",
 				null,
 				Instant.MAX,
 				Instant.MAX,
@@ -66,30 +79,35 @@ class TweetTest {
 		INVALID_NULL_REQUESTED_PUBLICATION_DATE(
 				1L,
 				"xyz",
+				"https://twitter.com/username/status/123456789",
 				null,
 				Instant.MAX,
 				NullableInstant.now().instant()),
 		INVALID_NULL_PUBLISHED_AT(
 				1L,
 				"ijk",
+				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				Instant.MAX,
 				null),
 		INVALID_NULL_CREATED_AT(
 				1L,
 				"ijk",
+				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				null,
 				NullableInstant.now().instant()),
 		INVALID_EXPIRED_REQUESTED_PUBLICATION_DATE(
 				1L,
 				"asdf",
+				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				Instant.MAX,
 				NullableInstant.now().instant()),
 		INVALID_EXPIRED_PUBLISHED_AT(
 				1L,
 				"asdf",
+				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				NullableInstant.now().instant()),
@@ -98,6 +116,7 @@ class TweetTest {
 				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 						+ "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type "
 						+ "and scrambled it to make a type specimen book. It has survived not only five years.",
+				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2033, 1, 1, 0, 5).toInstant(ZoneOffset.UTC),
 				NullableInstant.now().instant());
@@ -105,6 +124,8 @@ class TweetTest {
 		private final Long tweetId;
 
 		private final String message;
+		
+		private final String url;
 
 		private final Instant requestedPublicationDate;
 		
@@ -112,10 +133,12 @@ class TweetTest {
 		
 		private final Instant createdAt;
 
-		MockData(final Long tweetId, final String message, final Instant requestedPublicationDate, final Instant publishedAt,
+		MockData(final Long tweetId, final String message, final String url, 
+				final Instant requestedPublicationDate, final Instant publishedAt,
 				final Instant createdAt) {
 			this.tweetId = tweetId;
 			this.message = message;
+			this.url = url;
 			this.requestedPublicationDate = requestedPublicationDate;
 			this.publishedAt = publishedAt;
 			this.createdAt = createdAt;
@@ -131,6 +154,7 @@ class TweetTest {
 		void testNullParam() {
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_ID));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_MESSAGE));
+			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_URL));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_REQUESTED_PUBLICATION_DATE));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_PUBLISHED_AT));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_CREATED_AT));
@@ -165,6 +189,7 @@ class TweetTest {
 	    void testEqualsText() {
 	      assertThat(tweet.id().id(), is(MockData.VALID.tweetId));
 	      assertThat(tweet.message().message(), is(MockData.VALID.message));
+	      assertThat(tweet.url().url(), is(MockData.VALID.url));
 	      assertThat(tweet.requestedPublicationDate().instant(), is(MockData.VALID.requestedPublicationDate));
 	      assertThat(tweet.publishedAt().instant(), is(MockData.VALID.publishedAt));
 	      assertThat(tweet.createdAt().instant(), is(MockData.VALID.createdAt));

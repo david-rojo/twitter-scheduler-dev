@@ -71,8 +71,10 @@ class TweetApiControllerTest {
 	    	.andExpect(jsonPath("$", hasSize(2)))
 	    	.andExpect(jsonPath("$[0].id", equalTo(Math.toIntExact(tweet.id().id()))))
 	    	.andExpect(jsonPath("$[0].message", equalTo(tweet.message().message())))
+	    	.andExpect(jsonPath("$[0].url", equalTo(tweet.url().url())))
 	    	.andExpect(jsonPath("$[1].id", equalTo(Math.toIntExact(anotherTweet.id().id()))))
-	    	.andExpect(jsonPath("$[1].message", equalTo(anotherTweet.message().message())));	    	
+	    	.andExpect(jsonPath("$[1].message", equalTo(anotherTweet.message().message())))
+	    	.andExpect(jsonPath("$[1].url", equalTo(anotherTweet.url().url())));
 	}
 	
 	@Test
@@ -87,7 +89,8 @@ class TweetApiControllerTest {
 	    	)
 	    	.andExpect(status().isOk())
 	    	.andExpect(jsonPath("$.id", equalTo(Math.toIntExact(tweet.id().id()))))
-	    	.andExpect(jsonPath("$.message", equalTo(tweet.message().message())));
+	    	.andExpect(jsonPath("$.message", equalTo(tweet.message().message())))
+			.andExpect(jsonPath("$.url", equalTo(tweet.url().url())));
 	}
 	
 	@Test

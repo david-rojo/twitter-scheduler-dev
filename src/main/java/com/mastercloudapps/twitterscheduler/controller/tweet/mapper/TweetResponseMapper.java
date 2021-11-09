@@ -19,6 +19,7 @@ public class TweetResponseMapper {
 		
 		final var id = this.mapId(tweet);
 		final var message = this.mapMessage(tweet);
+		final var url = this.mapUrl(tweet);
 		final var requestedPublicationDate = this.mapRequestedPublicationDate(tweet);
 		final var publishedAt = this.mapPublishedAt(tweet);
 		final var createdAt = this.mapCreatedAt(tweet);
@@ -27,6 +28,7 @@ public class TweetResponseMapper {
 				.builder()
 				.id(id)
 				.message(message)
+				.url(url)
 				.requestedPublicationDate(requestedPublicationDate)
 				.publishedAt(publishedAt)
 				.createdAt(createdAt);
@@ -43,6 +45,11 @@ public class TweetResponseMapper {
 	private String mapMessage(final Tweet request) {
 
 		return request.message().message();
+	}
+	
+	private String mapUrl(final Tweet request) {
+
+		return request.url().url();
 	}
 
 	private String mapRequestedPublicationDate(final Tweet request) {

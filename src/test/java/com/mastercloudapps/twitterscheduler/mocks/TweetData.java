@@ -8,12 +8,14 @@ public enum TweetData {
 	HAPPY_NEW_YEAR(
 			1L,
 			"Happy new year!",
+			"https://twitter.com/username/status/123456789",
 			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_NEW_YEAR_2023),
 			Instant.parse(Constants.PUBLISHED_AT_NEW_YEAR_2023),
 			Instant.parse(Constants.CREATED_AT_NEW_YEAR_2023)),
 	MERRY_CHRISTMAS(
 			1L,
 			"Merry Christmas!",
+			"https://twitter.com/username/status/987654321",
 			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_CHRISTMAS_2024),
 			Instant.parse(Constants.PUBLISHED_AT_CHRISTMAS_2024),
 			Instant.parse(Constants.CREATED_AT_CHRISTMAS_2024));
@@ -21,6 +23,8 @@ public enum TweetData {
 	private final Long id;
 
 	private final String message;
+	
+	private final String url;
 
 	private final Instant requestedPublicationDate;
 	
@@ -28,11 +32,13 @@ public enum TweetData {
 	
 	private final Instant createdAt;
 
-	TweetData(final Long id, final String message, final Instant requestedPublicationDate,
-			final Instant publishedAt, final Instant createdAt) {
+	TweetData(final Long id, final String message, final String url, 
+			final Instant requestedPublicationDate, final Instant publishedAt,
+			final Instant createdAt) {
 
 		this.id = id;
 		this.message = message;
+		this.url = url;
 		this.requestedPublicationDate = requestedPublicationDate;
 		this.publishedAt = publishedAt;
 		this.createdAt = createdAt;
@@ -43,6 +49,7 @@ public enum TweetData {
 		return Tweet.builder()
 				.id(this.id)
 				.message(this.message)
+				.url(this.url)
 				.requestedPublicationDate(this.requestedPublicationDate)
 				.publishedAt(this.publishedAt)
 				.createdAt(this.createdAt)
