@@ -18,7 +18,18 @@ public class TwitterServiceImpl implements TwitterService {
 
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
-	private static Twitter twitter = TwitterFactory.getSingleton();
+	//private static Twitter twitter = TwitterFactory.getSingleton();
+
+	private Twitter twitter;
+	
+	public TwitterServiceImpl() {
+		this(TwitterFactory.getSingleton());
+	}
+	
+	TwitterServiceImpl(Twitter twitter){
+
+		this.twitter = twitter;
+	}
 	
 	@Override
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
 import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTweetRequest;
 import com.mastercloudapps.twitterscheduler.application.service.twitter.TwitterService;
 import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
@@ -20,22 +21,28 @@ import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
 @Component
 public class PublisherService implements PublishPendingTweetsUseCase {
 
+	private SchedulerConfiguration schedulerConfiguration;
+	
 	private TwitterService twitterService;
 	
 	private PendingTweetPort pendingTweetPort;
 	
 	private TweetPort tweetPort;
 	
-	public PublisherService(final TwitterService twitterService, final PendingTweetPort pendingTweetPort, 
+	public PublisherService(final SchedulerConfiguration schedulerConfiguration, 
+			final TwitterService twitterService, final PendingTweetPort pendingTweetPort, 
 			final TweetPort tweetPort) {
 		
+		this.schedulerConfiguration = schedulerConfiguration;
 		this.twitterService = twitterService;
 		this.pendingTweetPort = pendingTweetPort;
 		this.tweetPort = tweetPort;
 	}
 
 	@Override
-	public void publishPendingTweets(Instant publishUntil) {
+	public void publishPending() {
+		
+		Instant publishUntil = schedulerConfiguration.publishUntil();
 		
 		List<PendingTweet> pendingTweets = pendingTweetPort.findPendingForPublish(publishUntil).stream()
 				.map(identity())

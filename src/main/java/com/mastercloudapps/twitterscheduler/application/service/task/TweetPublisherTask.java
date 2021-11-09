@@ -12,8 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.togglz.core.manager.FeatureManager;
 
-import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
-import com.mastercloudapps.twitterscheduler.application.service.PublisherService;
+import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 
@@ -30,16 +29,12 @@ public class TweetPublisherTask {
 
 	private FeatureManager featureManager;
 	
-	private PublisherService service;
-	
-	private SchedulerConfiguration schedulerConfiguration;
+	private PublishPendingTweetsUseCase useCase;
 
-	public TweetPublisherTask(FeatureManager featureManager, PublisherService service,
-			SchedulerConfiguration schedulerConfiguration) {
+	public TweetPublisherTask(final FeatureManager featureManager, final PublishPendingTweetsUseCase useCase) {
 		
 		this.featureManager = featureManager;
-		this.service = service;
-		this.schedulerConfiguration = schedulerConfiguration;
+		this.useCase = useCase;
 	}
 
 	@Async
@@ -49,7 +44,7 @@ public class TweetPublisherTask {
 		if(featureManager.isActive(Features.SCHEDULER)) {
 			try {
 				logger.info("The time is now {}", dateFormat.format(new Date()));
-				service.publishPendingTweets(schedulerConfiguration.publishUntil());
+				useCase.publishPending();
 			} catch (Exception e) {
 				throw new ServiceException(ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION, e);
 			}

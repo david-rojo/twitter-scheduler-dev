@@ -1,5 +1,6 @@
 package com.mastercloudapps.twitterscheduler.application.service;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -72,7 +73,7 @@ public class PendingTweetServiceTest {
 	@DisplayName("Test create pending tweet with valid request")
 	void givenCreateValidRequest_expectCreatedPendingTweet() {
 		
-		when(service.create(createOperation)).thenReturn(pendingTweet);
+		when(pendingTweetPort.create(any())).thenReturn(pendingTweet);
 		
 		PendingTweet created = service.create(createOperation);
 		
@@ -89,7 +90,7 @@ public class PendingTweetServiceTest {
 		List<PendingTweet> pendingTweets = Stream.of(pendingTweet, anotherPendingTweet)
 				.collect(Collectors.toList());
 		
-		when(service.findAll()).thenReturn(pendingTweets);
+		when(pendingTweetPort.findAll()).thenReturn(pendingTweets);
 		
 		var pendingTweetsResponse = service.findAll().stream().collect(Collectors.toList());
 		
@@ -111,7 +112,7 @@ public class PendingTweetServiceTest {
 	@DisplayName("Test find one pending tweet with existing valid request")
 	void givenFindOneExistingValidRequest_expectPendingTweet() {
 		
-		when(service.findOne(findOneOperation)).thenReturn(Optional.of(pendingTweet));
+		when(pendingTweetPort.findOne(findOneOperation.getId())).thenReturn(Optional.of(pendingTweet));
 		
 		var pendingTweetResponse = service.findOne(findOneOperation);
 		
@@ -126,7 +127,7 @@ public class PendingTweetServiceTest {
 	@DisplayName("Test find one pending tweet with not existing valid request")
 	void givenFindOneNotExistingValidRequest_expectEmpty() {
 		
-		when(service.findOne(findOneOperation)).thenReturn(Optional.empty());
+		when(pendingTweetPort.findOne(findOneOperation.getId())).thenReturn(Optional.empty());
 		
 		var pendingTweetResponse = service.findOne(findOneOperation);
 		

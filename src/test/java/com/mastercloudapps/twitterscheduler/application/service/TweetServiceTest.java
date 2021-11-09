@@ -60,7 +60,7 @@ public class TweetServiceTest {
 		List<Tweet> tweets = Stream.of(tweet, anotherTweet)
 				.collect(Collectors.toList());
 		
-		when(service.findAll()).thenReturn(tweets);
+		when(tweetPort.findAll()).thenReturn(tweets);
 		
 		var tweetsResponse = service.findAll().stream().collect(Collectors.toList());
 		
@@ -82,7 +82,7 @@ public class TweetServiceTest {
 	@DisplayName("Test find one tweet with existing valid request")
 	void givenFindOneExistingValidRequest_expectTweet() {
 		
-		when(service.findOne(findOneOperation)).thenReturn(Optional.of(tweet));
+		when(tweetPort.findOne(findOneOperation.getId())).thenReturn(Optional.of(tweet));
 		
 		var tweetResponse = service.findOne(findOneOperation);
 		
@@ -97,7 +97,7 @@ public class TweetServiceTest {
 	@DisplayName("Test find one tweet with not existing valid request")
 	void givenFindOneNotExistingValidRequest_expectEmpty() {
 		
-		when(service.findOne(findOneOperation)).thenReturn(Optional.empty());
+		when(tweetPort.findOne(findOneOperation.getId())).thenReturn(Optional.empty());
 		
 		var tweetResponse = service.findOne(findOneOperation);
 		
