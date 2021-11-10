@@ -42,6 +42,7 @@ public class TwitterServiceImpl implements TwitterService {
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())
+					.url(url)
 					.message(statusUpdate.getStatus())
 					.publishedAt(status.getCreatedAt().toInstant())
 					.build();
