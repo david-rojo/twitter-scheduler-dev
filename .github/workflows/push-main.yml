@@ -11,6 +11,10 @@ jobs:
   run_tests_build_app:
     name: Run tests and build app
     runs-on: ubuntu-20.04
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
