@@ -26,24 +26,24 @@ import twitter4j.TwitterObjectFactory;
 @ExtendWith(MockitoExtension.class)
 class TwitterServiceImplTest {
 
-	private TwitterServiceImpl service;
-	
-	@Mock
-	private Twitter twitter;
-	
-	private PublishTweetResponse response;
-	
-	@BeforeEach
-	public void beforeEach() {
-		
-		this.service = new TwitterServiceImpl(twitter);
-		
-		this.response = PublishTweetResponse.builder()
-				.id(1L)
-				.message("test message")
-				.publishedAt(Instant.now())
-				.build();
-	}
+//	private TwitterServiceImpl service;
+//	
+//	@Mock
+//	private Twitter twitter;
+//	
+//	private PublishTweetResponse response;
+//	
+//	@BeforeEach
+//	public void beforeEach() {
+//		
+//		this.service = new TwitterServiceImpl();
+//		
+//		this.response = PublishTweetResponse.builder()
+//				.id(1L)
+//				.message("test message")
+//				.publishedAt(Instant.now())
+//				.build();
+//	}
 	
 	
 //	@Disabled
@@ -65,78 +65,78 @@ class TwitterServiceImplTest {
 //	}
 
 
-	private String getStatus() {
-		String status = "{"
-				+ "createdAt=Tue Nov 09 00:14:37 CET 2021, "
-				+ "id=1457849067300696064, "
-				+ "text='text tweet', "
-				+ "source='<a href=\"https://help.twitter.com/en/using-twitter/how-to-tweet#source-labels\" "
-				+ "rel=\"nofollow\">twitter-scheduler-cloudapps</a>', "
-				+ "isTruncated=false, "
-				+ "inReplyToStatusId=-1, "
-				+ "inReplyToUserId=-1, "
-				+ "isFavorited=false, "
-				+ "isRetweeted=false, "
-				+ "favoriteCount=0, "
-				+ "inReplyToScreenName='null', "
-				+ "geoLocation=null, "
-				+ "place=null, "
-				+ "retweetCount=0, "
-				+ "isPossiblySensitive=false, "
-				+ "lang='en', "
-				+ "contributorsIDs=[], "
-				+ "retweetedStatus=null, "
-				+ "userMentionEntities=[], "
-				+ "urlEntities=[], "
-				+ "hashtagEntities=[], "
-				+ "mediaEntities=[], "
-				+ "symbolEntities=[], "
-				+ "currentUserRetweetId=-1, "
-				+ "user={"
-					+ "id=1418224648014028813, "
-					+ "name='Blue Ocean', "
-					+ "email='null', "
-					+ "screenName='BlueOcean_TFM', "
-					+ "location='', "
-					+ "description='', "
-					+ "isContributorsEnabled=false, "
-					+ "profileImageUrl='http://pbs.twimg.com/profile_images/1418229439977164804/baRT3OKj_normal.png', "
-					+ "profileImageUrlHttps='https://pbs.twimg.com/profile_images/1418229439977164804/baRT3OKj_normal.png', "
-					+ "isDefaultProfileImage=false, "
-					+ "url='null', "
-					+ "isProtected=false, "
-					+ "followersCount=0, "
-					+ "status=null, "
-					+ "profileBackgroundColor='F5F8FA', "
-					+ "profileTextColor='333333', "
-					+ "profileLinkColor='1DA1F2', "
-					+ "profileSidebarFillColor='DDEEF6', "
-					+ "profileSidebarBorderColor='C0DEED', "
-					+ "profileUseBackgroundImage=true, "
-					+ "isDefaultProfile=true, "
-					+ "showAllInlineMedia=false, "
-					+ "friendsCount=0, "
-					+ "createdAt=Thu Jul 22 17:01:54 CEST 2021, "
-					+ "favouritesCount=0, "
-					+ "utcOffset=-1, "
-					+ "timeZone='null', "
-					+ "profileBackgroundImageUrl='null', "
-					+ "profileBackgroundImageUrlHttps='null', "
-					+ "profileBackgroundTiled=false, "
-					+ "lang='null', "
-					+ "statusesCount=12, "
-					+ "isGeoEnabled=false, "
-					+ "isVerified=false, "
-					+ "translator=false, "
-					+ "listedCount=0, "
-					+ "isFollowRequestSent=false, "
-					+ "withheldInCountries=[]"
-				+ "}, "
-				+ "withHeldInCountries=null, "
-				+ "quotedStatusId=-1, "
-				+ "quotedStatus=null"
-			+ "}";
-		return status;
-	}
+//	private String getStatus() {
+//		String status = "{"
+//				+ "createdAt=Tue Nov 09 00:14:37 CET 2021, "
+//				+ "id=1457849067300696064, "
+//				+ "text='text tweet', "
+//				+ "source='<a href=\"https://help.twitter.com/en/using-twitter/how-to-tweet#source-labels\" "
+//				+ "rel=\"nofollow\">twitter-scheduler-cloudapps</a>', "
+//				+ "isTruncated=false, "
+//				+ "inReplyToStatusId=-1, "
+//				+ "inReplyToUserId=-1, "
+//				+ "isFavorited=false, "
+//				+ "isRetweeted=false, "
+//				+ "favoriteCount=0, "
+//				+ "inReplyToScreenName='null', "
+//				+ "geoLocation=null, "
+//				+ "place=null, "
+//				+ "retweetCount=0, "
+//				+ "isPossiblySensitive=false, "
+//				+ "lang='en', "
+//				+ "contributorsIDs=[], "
+//				+ "retweetedStatus=null, "
+//				+ "userMentionEntities=[], "
+//				+ "urlEntities=[], "
+//				+ "hashtagEntities=[], "
+//				+ "mediaEntities=[], "
+//				+ "symbolEntities=[], "
+//				+ "currentUserRetweetId=-1, "
+//				+ "user={"
+//					+ "id=1418224648014028813, "
+//					+ "name='Blue Ocean', "
+//					+ "email='null', "
+//					+ "screenName='BlueOcean_TFM', "
+//					+ "location='', "
+//					+ "description='', "
+//					+ "isContributorsEnabled=false, "
+//					+ "profileImageUrl='http://pbs.twimg.com/profile_images/1418229439977164804/baRT3OKj_normal.png', "
+//					+ "profileImageUrlHttps='https://pbs.twimg.com/profile_images/1418229439977164804/baRT3OKj_normal.png', "
+//					+ "isDefaultProfileImage=false, "
+//					+ "url='null', "
+//					+ "isProtected=false, "
+//					+ "followersCount=0, "
+//					+ "status=null, "
+//					+ "profileBackgroundColor='F5F8FA', "
+//					+ "profileTextColor='333333', "
+//					+ "profileLinkColor='1DA1F2', "
+//					+ "profileSidebarFillColor='DDEEF6', "
+//					+ "profileSidebarBorderColor='C0DEED', "
+//					+ "profileUseBackgroundImage=true, "
+//					+ "isDefaultProfile=true, "
+//					+ "showAllInlineMedia=false, "
+//					+ "friendsCount=0, "
+//					+ "createdAt=Thu Jul 22 17:01:54 CEST 2021, "
+//					+ "favouritesCount=0, "
+//					+ "utcOffset=-1, "
+//					+ "timeZone='null', "
+//					+ "profileBackgroundImageUrl='null', "
+//					+ "profileBackgroundImageUrlHttps='null', "
+//					+ "profileBackgroundTiled=false, "
+//					+ "lang='null', "
+//					+ "statusesCount=12, "
+//					+ "isGeoEnabled=false, "
+//					+ "isVerified=false, "
+//					+ "translator=false, "
+//					+ "listedCount=0, "
+//					+ "isFollowRequestSent=false, "
+//					+ "withheldInCountries=[]"
+//				+ "}, "
+//				+ "withHeldInCountries=null, "
+//				+ "quotedStatusId=-1, "
+//				+ "quotedStatus=null"
+//			+ "}";
+//		return status;
+//	}
 	
 }
