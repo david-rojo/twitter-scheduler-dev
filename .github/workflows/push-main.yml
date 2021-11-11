@@ -117,21 +117,21 @@ jobs:
             exit 1
           fi
 
-  coverage:
-    name: Coverage
-    needs: [run_tests_build_app]
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Generate coverage reports
-        run: mvn -B verify --no-transfer-progress
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v2
-        with:
-          file: ./**/target/site/jacoco/jacoco.xml
-          name: codecov
+#  coverage:
+#    name: Coverage
+#    needs: [run_tests_build_app]
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - name: Clone repository
+#        uses: actions/checkout@v2
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#      - name: Generate coverage reports
+#        run: mvn -B verify --no-transfer-progress
+#      - name: Upload coverage reports
+#        uses: codecov/codecov-action@v2
+#        with:
+#          file: ./**/target/site/jacoco/jacoco.xml
+#          name: codecov
