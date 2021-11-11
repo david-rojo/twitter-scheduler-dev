@@ -60,6 +60,7 @@ public class PublisherService implements PublishPendingTweetsUseCase {
 					.message(pending.message().message())
 					.build());
 			
+			logger.info("Published pending tweet with id = " + pending.id().id());
 			publishedTweet.ifPresent(published -> {
 				
 				pendingTweetPort.delete(pending.id().id());

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
+import com.mastercloudapps.twitterscheduler.controller.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
@@ -68,11 +68,6 @@ class PendingTweetTest {
 				"ijk",
 				Instant.MAX,
 				null),
-		INVALID_EXPIRED_PUBLICATION_DATE(
-				1L,
-				"asdf",
-				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
 		INVALID_MESSAGE_MAX_LENGTH_EXCEEDED(
 				1L,
 				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
@@ -114,7 +109,7 @@ class PendingTweetTest {
 		@DisplayName("Test creation with domain errors, expected customized domain exceptions")
 		void testDomainExceptions() {
 			assertThrows(MessageMaxLengthExceededException.class, () -> createPendingTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));
-			assertThrows(ExpiredPublicationDateException.class, () -> createPendingTweet(MockData.INVALID_EXPIRED_PUBLICATION_DATE));
+			//assertThrows(ExpiredPublicationDateException.class, () -> createPendingTweet(MockData.INVALID_EXPIRED_PUBLICATION_DATE));
 		}
 	}
 	

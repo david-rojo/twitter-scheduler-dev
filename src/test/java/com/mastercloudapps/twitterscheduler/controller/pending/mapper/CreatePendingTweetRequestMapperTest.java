@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import com.mastercloudapps.twitterscheduler.controller.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -41,6 +42,7 @@ class CreatePendingTweetRequestMapperTest {
 		VALID_REQUEST("test message 1", "2022-04-01T10:00:00Z"),
 		REQUEST_WITHOUT_MESSAGE("", "2022-05-01T10:00:00Z"),
 		REQUEST_WITHOUT_PUBLICATION_DATE("test message 2", ""),
+		REQUEST_WITH_EXPIRED_PUBLICATION_DATE("test message 2", "2021-05-01T10:00:00Z"),
 		REQUEST_WITH_INVALID_DATE("test message 2", "1");
 
 		private final String message;
@@ -78,9 +80,15 @@ class CreatePendingTweetRequestMapperTest {
 		}
 
 		@Test
-		void mapQueryRequest_withInvalidDate_shouldThrowException() {
+		void mapQueryRequest_withInvalidDate_shouldReturnException() {
 
 			assertMapperThrowsException(DateTimeParseException.class, MockData.REQUEST_WITH_INVALID_DATE);
+		}
+		
+		@Test
+		void mapQueryRequest_withExpiredDate_shouldReturnException() {
+
+			assertMapperThrowsException(ExpiredPublicationDateException.class, MockData.REQUEST_WITH_EXPIRED_PUBLICATION_DATE);
 		}
 	}
 
