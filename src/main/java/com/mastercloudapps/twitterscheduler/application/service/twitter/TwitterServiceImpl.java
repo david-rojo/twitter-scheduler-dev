@@ -21,8 +21,8 @@ public class TwitterServiceImpl implements TwitterService {
 
 	private static Logger logger = LoggerFactory.getLogger(TwitterServiceImpl.class);
 	
-	@Value("${debug}")
-	private boolean debug;
+//	@Value("${debug}")
+//	private boolean debug;
 	
 	@Value("${oauth.consumerKey}")
 	private String consumerKey;
@@ -49,7 +49,7 @@ public class TwitterServiceImpl implements TwitterService {
 	    logger.info("AccessTokenSecret --> " + accessTokenSecret);
 	    logger.info("ConsumerKey --> " + consumerKey);
 	    logger.info("ConsumerSecret --> " + consumerSecret);
-	    logger.info("debug --> " + debug);
+//	    logger.info("debug --> " + debug);
 	}
 	
 	TwitterServiceImpl(Twitter twitter){
