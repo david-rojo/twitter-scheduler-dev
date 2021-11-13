@@ -11,6 +11,7 @@ import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 
 @Component
 public class TwitterServiceImpl implements TwitterService {
@@ -22,7 +23,7 @@ public class TwitterServiceImpl implements TwitterService {
 	private Twitter twitter;
 	
 	public TwitterServiceImpl() {
-		this(TwitterClient.getTwitterInstance());
+		this(TwitterFactory.getSingleton());
 	}
 	
 	TwitterServiceImpl(Twitter twitter){
