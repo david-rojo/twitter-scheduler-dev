@@ -12,19 +12,19 @@ public class TwitterClient {
 
 	private static Logger logger = LoggerFactory.getLogger(TwitterClient.class);
 	
-	@Value("${twitter.debug}")
+	@Value("${debug}")
 	private static boolean debug;
 	
-	@Value("${twitter.oauth.consumerKey}")
+	@Value("${oauth.consumerKey}")
 	private static String consumerKey;
 	
-	@Value("${twitter.oauth.consumerSecret}")
+	@Value("${oauth.consumerSecret}")
 	private static String consumerSecret;
 	
-	@Value("${twitter.oauth.accessToken}")
+	@Value("${oauth.accessToken}")
 	private static String accessToken;
 	
-	@Value("${twitter.oauth.accessTokenSecret}")
+	@Value("${oauth.accessTokenSecret}")
 	private static String accessTokenSecret;
 	
 	public static Twitter getTwitterInstance() {
@@ -37,7 +37,9 @@ public class TwitterClient {
 	    	.setOAuthAccessTokenSecret(accessTokenSecret);
 
 	    logger.info("AccessToken --> " + accessToken);
+	    logger.info("AccessTokenSecret --> " + accessTokenSecret);
 	    logger.info("ConsumerKey --> " + consumerKey);
+	    logger.info("ConsumerSecret --> " + consumerSecret);
 	    TwitterFactory tf = new TwitterFactory(cb.build());
 	    return tf.getInstance();
 	}
