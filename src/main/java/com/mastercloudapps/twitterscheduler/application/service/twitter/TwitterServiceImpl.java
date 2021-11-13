@@ -11,25 +11,24 @@ import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 
 @Component
 public class TwitterServiceImpl implements TwitterService {
 
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
-	private static Twitter twitter = TwitterFactory.getSingleton();
+//	private static Twitter twitter = TwitterFactory.getSingleton();
 
-//	private Twitter twitter;
-//	
-//	public TwitterServiceImpl() {
-//		this(TwitterFactory.getSingleton());
-//	}
-//	
-//	TwitterServiceImpl(Twitter twitter){
-//
-//		this.twitter = twitter;
-//	}
+	private Twitter twitter;
+	
+	public TwitterServiceImpl() {
+		this(TwitterClient.getTwitterInstance());
+	}
+	
+	TwitterServiceImpl(Twitter twitter){
+
+		this.twitter = twitter;
+	}
 	
 	@Override
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {
@@ -37,12 +36,10 @@ public class TwitterServiceImpl implements TwitterService {
 		try {
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
 			Status status = twitter.updateStatus(statusUpdate);
-			String url = "https://twitter.com/" + status.getUser().getScreenName()
-					+ "/status/" + status.getId(); 
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())
-					.url(url)
+					.url(this.getTweetUrl(status))
 					.message(statusUpdate.getStatus())
 					.publishedAt(status.getCreatedAt().toInstant())
 					.build();
@@ -52,6 +49,12 @@ public class TwitterServiceImpl implements TwitterService {
 		} catch (Exception e) {
 			throw new ServiceException(ERR_MSG_PUBLISH_TWEET, e);
 		}		
+	}
+	
+	private String getTweetUrl(Status status) {
+		
+		return "https://twitter.com/" + status.getUser().getScreenName()
+				+ "/status/" + status.getId();
 	}
 
 	

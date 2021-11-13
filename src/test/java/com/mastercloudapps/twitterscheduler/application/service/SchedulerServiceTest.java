@@ -51,7 +51,7 @@ public class SchedulerServiceTest {
 	void givenGetScheduleStatusValidRequest_whenActive_expectScheduledInfoActive() {
 
 		when(featureManager.isActive(Features.SCHEDULER)).thenReturn(true);
-		when(schedulerConfiguration.getFixedRate()).thenReturn("300000");
+		when(schedulerConfiguration.getFixedRate()).thenReturn("180000");
 		when(schedulerConfiguration.getInitialDelay()).thenReturn("60000");
 
 		final var info = service.getInfo();
@@ -68,7 +68,7 @@ public class SchedulerServiceTest {
 	void givenGetScheduleStatusValidRequest_whenInactive_expectScheduledInfoActive() {
 
 		when(featureManager.isActive(Features.SCHEDULER)).thenReturn(false);
-		when(schedulerConfiguration.getFixedRate()).thenReturn("300000");
+		when(schedulerConfiguration.getFixedRate()).thenReturn("180000");
 		when(schedulerConfiguration.getInitialDelay()).thenReturn("60000");
 
 		final var info = service.getInfo();

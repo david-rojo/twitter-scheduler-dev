@@ -4,8 +4,8 @@ import com.mastercloudapps.twitterscheduler.application.model.scheduler.Schedule
 
 public enum SchedulerInfoData {
 
-	ACTIVE(true, 300000L, 60000L),
-	INACTIVE(false, 300000L, 60000L);
+	ACTIVE(true, 180000L, 60000L),
+	INACTIVE(false, 180000L, 60000L);
 	
 	private final boolean active;
 
