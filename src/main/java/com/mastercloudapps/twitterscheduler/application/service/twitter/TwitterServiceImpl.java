@@ -45,11 +45,6 @@ public class TwitterServiceImpl implements TwitterService {
 	public TwitterServiceImpl() {
 		this(TwitterFactory.getSingleton());
 		//this(TwitterClient.getTwitterInstance());
-	    logger.info("AccessToken --> " + accessToken);
-	    logger.info("AccessTokenSecret --> " + accessTokenSecret);
-	    logger.info("ConsumerKey --> " + consumerKey);
-	    logger.info("ConsumerSecret --> " + consumerSecret);
-//	    logger.info("debug --> " + debug);
 	}
 	
 	TwitterServiceImpl(Twitter twitter){
@@ -61,6 +56,12 @@ public class TwitterServiceImpl implements TwitterService {
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {
 		
 		try {
+		    logger.info("AccessToken --> " + accessToken);
+		    logger.info("AccessTokenSecret --> " + accessTokenSecret);
+		    logger.info("ConsumerKey --> " + consumerKey);
+		    logger.info("ConsumerSecret --> " + consumerSecret);
+//		    logger.info("debug --> " + debug);
+		    
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
 			Status status = twitter.updateStatus(statusUpdate);
 			
