@@ -2,6 +2,9 @@ package com.mastercloudapps.twitterscheduler.application.service.twitter;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTweetRequest;
@@ -11,10 +14,28 @@ import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 
 @Component
 public class TwitterServiceImpl implements TwitterService {
 
+	private static Logger logger = LoggerFactory.getLogger(TwitterServiceImpl.class);
+	
+	@Value("${debug}")
+	private static boolean debug;
+	
+	@Value("${oauth.consumerKey}")
+	private static String consumerKey;
+	
+	@Value("${oauth.consumerSecret}")
+	private static String consumerSecret;
+	
+	@Value("${oauth.accessToken}")
+	private static String accessToken;
+	
+	@Value("${oauth.accessTokenSecret}")
+	private static String accessTokenSecret;
+	
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
 //	private static Twitter twitter = TwitterFactory.getSingleton();
@@ -22,8 +43,12 @@ public class TwitterServiceImpl implements TwitterService {
 	private Twitter twitter;
 	
 	public TwitterServiceImpl() {
-		//this(TwitterFactory.getSingleton());
-		this(TwitterClient.getTwitterInstance());
+		this(TwitterFactory.getSingleton());
+		//this(TwitterClient.getTwitterInstance());
+	    logger.info("AccessToken --> " + accessToken);
+	    logger.info("AccessTokenSecret --> " + accessTokenSecret);
+	    logger.info("ConsumerKey --> " + consumerKey);
+	    logger.info("ConsumerSecret --> " + consumerSecret);
 	}
 	
 	TwitterServiceImpl(Twitter twitter){
