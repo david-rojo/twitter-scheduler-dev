@@ -24,18 +24,18 @@ public class TwitterServiceImpl implements TwitterService {
 //	@Value("${debug}")
 //	private boolean debug;
 	
-	@Value("${oauth.consumerKey}")
-	private String consumerKey;
-	
-	@Value("${oauth.consumerSecret}")
-	private String consumerSecret;
-	
-	@Value("${oauth.accessToken}")
-	private String accessToken;
-	
-	@Value("${oauth.accessTokenSecret}")
-	private String accessTokenSecret;
-	
+//	@Value("${oauth.consumerKey}")
+//	private String consumerKey;
+//	
+//	@Value("${oauth.consumerSecret}")
+//	private String consumerSecret;
+//	
+//	@Value("${oauth.accessToken}")
+//	private String accessToken;
+//	
+//	@Value("${oauth.accessTokenSecret}")
+//	private String accessTokenSecret;
+
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
 //	private static Twitter twitter = TwitterFactory.getSingleton();
@@ -56,10 +56,10 @@ public class TwitterServiceImpl implements TwitterService {
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {
 		
 		try {
-		    logger.info("AccessToken --> " + accessToken);
-		    logger.info("AccessTokenSecret --> " + accessTokenSecret);
-		    logger.info("ConsumerKey --> " + consumerKey);
-		    logger.info("ConsumerSecret --> " + consumerSecret);
+//		    logger.info("AccessToken --> " + accessToken);
+//		    logger.info("AccessTokenSecret --> " + accessTokenSecret);
+//		    logger.info("ConsumerKey --> " + consumerKey);
+//		    logger.info("ConsumerSecret --> " + consumerSecret);
 //		    logger.info("debug --> " + debug);
 		    
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
