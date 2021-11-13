@@ -27,9 +27,6 @@ public class TwitterClient {
 	@Value("${twitter.oauth.accessTokenSecret}")
 	private static String accessTokenSecret;
 	
-	@Value("${TWITTER_CONSUMER_KEY}")
-	private static String consumerKeyOS;
-	
 	public static Twitter getTwitterInstance() {
 		
 	    ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -41,7 +38,6 @@ public class TwitterClient {
 
 	    logger.info("AccessToken --> " + accessToken);
 	    logger.info("ConsumerKey --> " + consumerKey);
-	    logger.info("ConsumerKeyOS --> " + consumerKeyOS);
 	    TwitterFactory tf = new TwitterFactory(cb.build());
 	    return tf.getInstance();
 	}
