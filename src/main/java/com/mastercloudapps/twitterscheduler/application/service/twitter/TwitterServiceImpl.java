@@ -22,19 +22,19 @@ public class TwitterServiceImpl implements TwitterService {
 	private static Logger logger = LoggerFactory.getLogger(TwitterServiceImpl.class);
 	
 	@Value("${debug}")
-	private static boolean debug;
+	private boolean debug;
 	
 	@Value("${oauth.consumerKey}")
-	private static String consumerKey;
+	private String consumerKey;
 	
 	@Value("${oauth.consumerSecret}")
-	private static String consumerSecret;
+	private String consumerSecret;
 	
 	@Value("${oauth.accessToken}")
-	private static String accessToken;
+	private String accessToken;
 	
 	@Value("${oauth.accessTokenSecret}")
-	private static String accessTokenSecret;
+	private String accessTokenSecret;
 	
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
@@ -49,6 +49,7 @@ public class TwitterServiceImpl implements TwitterService {
 	    logger.info("AccessTokenSecret --> " + accessTokenSecret);
 	    logger.info("ConsumerKey --> " + consumerKey);
 	    logger.info("ConsumerSecret --> " + consumerSecret);
+	    logger.info("debug --> " + debug);
 	}
 	
 	TwitterServiceImpl(Twitter twitter){
