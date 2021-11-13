@@ -1,5 +1,7 @@
 package com.mastercloudapps.twitterscheduler.application.service.twitter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import twitter4j.Twitter;
@@ -8,6 +10,8 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterClient {
 
+	private static Logger logger = LoggerFactory.getLogger(TwitterClient.class);
+	
 	@Value("${twitter.debug}")
 	private static boolean debug;
 	
@@ -24,13 +28,16 @@ public class TwitterClient {
 	private static String accessTokenSecret;
 	
 	public static Twitter getTwitterInstance() {
+		
 	    ConfigurationBuilder cb = new ConfigurationBuilder();
 	    cb.setDebugEnabled(debug)
-	    .setOAuthConsumerKey(consumerKey)
-	    .setOAuthConsumerSecret(consumerSecret)
-	    .setOAuthAccessToken(accessToken)
-	    .setOAuthAccessTokenSecret(accessTokenSecret);
+	    	.setOAuthConsumerKey(consumerKey)
+	    	.setOAuthConsumerSecret(consumerSecret)
+	    	.setOAuthAccessToken(accessToken)
+	    	.setOAuthAccessTokenSecret(accessTokenSecret);
 
+	    logger.info("AccessToken --> " + accessToken);
+	    logger.info("ConsumerKey --> " + consumerKey);
 	    TwitterFactory tf = new TwitterFactory(cb.build());
 	    return tf.getInstance();
 	}
