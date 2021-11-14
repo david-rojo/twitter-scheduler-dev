@@ -9,9 +9,6 @@ import twitter4j.auth.AccessToken;
 @Component
 public class TwitterClient {
 	
-	@Value("${debug}")
-	private boolean debug;
-	
 	@Value("${oauth.consumerKey}")
 	private String consumerKey;
 	

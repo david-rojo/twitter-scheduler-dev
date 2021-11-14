@@ -11,21 +11,6 @@ public class TwitterConnection {
 
 	private static Logger logger = LoggerFactory.getLogger(TwitterConnection.class);
 	
-//	@Value("${debug}")
-//	private boolean debug;
-	
-	@Value("${twitter.oauth.consumerKey}")
-	private String consumerKey;
-	
-	@Value("${twitter.oauth.consumerSecret}")
-	private String consumerSecret;
-	
-	@Value("${twitter.oauth.accessToken}")
-	private String accessToken;
-	
-	@Value("${twitter.oauth.accessTokenSecret}")
-	private String accessTokenSecret;
-	
 	private static Twitter twitter;
 	
 	public static Twitter getInstance() {
