@@ -15,39 +15,37 @@ import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 
 @Component
 public class TwitterServiceImpl implements TwitterService {
 
 	private static Logger logger = LoggerFactory.getLogger(TwitterServiceImpl.class);
 	
-//	@Value("${debug}")
-//	private boolean debug;
+	@Value("${twitter.oauth.consumerKey}")
+	private String consumerKey;
 	
-//	@Value("${oauth.consumerKey}")
-//	private String consumerKey;
-//	
-//	@Value("${oauth.consumerSecret}")
-//	private String consumerSecret;
-//	
-//	@Value("${oauth.accessToken}")
-//	private String accessToken;
-//	
-//	@Value("${oauth.accessTokenSecret}")
-//	private String accessTokenSecret;
+	@Value("${twitter.oauth.consumerSecret}")
+	private String consumerSecret;
+	
+	@Value("${twitter.oauth.accessToken}")
+	private String accessToken;
+	
+	@Value("${twitter.oauth.accessTokenSecret}")
+	private String accessTokenSecret;
 
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 	
-//	private static Twitter twitter = TwitterFactory.getSingleton();
+	private Twitter twitter;
 
-	private TwitterClient twitter;
+//	private TwitterClient twitter;
 	
 	public TwitterServiceImpl() {}
 	
-	TwitterServiceImpl(TwitterClient twitter){
-
-		this.twitter = new TwitterClient();
-	}
+//	TwitterServiceImpl(TwitterClient twitter){
+//
+//		this.twitter = new TwitterClient();
+//	}
 	
 	@Override
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {
@@ -61,7 +59,7 @@ public class TwitterServiceImpl implements TwitterService {
 		    
 			
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
-			Status status = twitter.getAuthClient().updateStatus(statusUpdate);
+			Status status = this.getTwitterClient().updateStatus(statusUpdate);
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())
@@ -81,6 +79,20 @@ public class TwitterServiceImpl implements TwitterService {
 		
 		return "https://twitter.com/" + status.getUser().getScreenName()
 				+ "/status/" + status.getId();
+	}
+	
+	private Twitter getTwitterClient() {
+		
+		if (twitter == null) {
+			twitter = new TwitterFactory().getInstance();
+		}
+		
+		twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		
+		AccessToken oathAccessToken = new AccessToken(accessToken, accessTokenSecret);
+		twitter.setOAuthAccessToken(oathAccessToken);
+		
+		return twitter;
 	}
 
 	
