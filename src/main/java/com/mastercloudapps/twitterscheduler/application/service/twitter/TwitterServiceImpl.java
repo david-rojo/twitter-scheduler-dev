@@ -46,7 +46,7 @@ public class TwitterServiceImpl implements TwitterService {
 	
 	TwitterServiceImpl(TwitterClient twitter){
 
-		this.twitter = twitter;
+		this.twitter = new TwitterClient();
 	}
 	
 	@Override
