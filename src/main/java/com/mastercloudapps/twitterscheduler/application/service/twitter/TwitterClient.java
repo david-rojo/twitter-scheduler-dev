@@ -9,16 +9,16 @@ import twitter4j.auth.AccessToken;
 @Component
 public class TwitterClient {
 	
-	@Value("${oauth.consumerKey}")
+	@Value("${twitter.oauth.consumerKey}")
 	private String consumerKey;
 	
-	@Value("${oauth.consumerSecret}")
+	@Value("${twitter.oauth.consumerSecret}")
 	private String consumerSecret;
 	
-	@Value("${oauth.accessToken}")
+	@Value("${twitter.oauth.accessToken}")
 	private String accessToken;
 	
-	@Value("${oauth.accessTokenSecret}")
+	@Value("${twitter.oauth.accessTokenSecret}")
 	private String accessTokenSecret;
 	
 	private Twitter twitter;
