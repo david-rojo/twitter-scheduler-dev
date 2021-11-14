@@ -1,9 +1,11 @@
 package com.mastercloudapps.twitterscheduler.application.service.twitter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 @Component
@@ -24,15 +26,19 @@ public class TwitterClient {
 	private Twitter twitter;
 	
 	public TwitterClient() {
-		twitter = TwitterConnection.getInstance();
+		
 	}
 	
 	public Twitter getAuthClient() {
 		
-		twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		
-		AccessToken oathAccessToken = new AccessToken(accessToken, accessTokenSecret);
-		twitter.setOAuthAccessToken(oathAccessToken);
+		if (twitter == null) {
+			twitter = new TwitterFactory().getInstance();
+			
+			twitter.setOAuthConsumer(consumerKey, consumerSecret);
+			
+			AccessToken oathAccessToken = new AccessToken(accessToken, accessTokenSecret);
+			twitter.setOAuthAccessToken(oathAccessToken);
+		}
 		
 		return twitter;
 	}
