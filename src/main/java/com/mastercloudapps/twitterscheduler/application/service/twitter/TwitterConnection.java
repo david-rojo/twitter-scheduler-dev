@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 
 public class TwitterConnection {
 
 	private static Logger logger = LoggerFactory.getLogger(TwitterConnection.class);
 	
-	@Value("${debug}")
-	private boolean debug;
+//	@Value("${debug}")
+//	private boolean debug;
 	
 	@Value("${twitter.oauth.consumerKey}")
 	private String consumerKey;
