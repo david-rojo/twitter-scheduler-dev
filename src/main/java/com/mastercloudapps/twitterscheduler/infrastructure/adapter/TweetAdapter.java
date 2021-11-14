@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,8 @@ import com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet.TweetJpaRep
 public class TweetAdapter implements TweetPort {
 
 	private static final String DATA_ACCESS_ERROR = "An unexpected error occurred executing a data access operation";
+	
+	private static Logger logger = LoggerFactory.getLogger(TweetAdapter.class);
 
 	private TweetJpaRepository tweetJpaRepository;
 	
@@ -67,11 +71,14 @@ public class TweetAdapter implements TweetPort {
 	@Override
 	public Optional<Tweet> findOne(Long id) {
 		
+		logger.info("searching tweet with id " + id + " in database");
 		final var tweetJpa = tweetJpaRepository.findById(id);
 
 		if (tweetJpa.isPresent()) {
+			logger.info("found one in db");
 			return Optional.of(mapper.mapEntity(tweetJpa.get()));
 		}
+		logger.info("not found one in db");
 		return Optional.empty();
 	}
 
