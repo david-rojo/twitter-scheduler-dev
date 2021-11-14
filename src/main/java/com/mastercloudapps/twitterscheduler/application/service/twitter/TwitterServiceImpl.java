@@ -2,14 +2,13 @@ package com.mastercloudapps.twitterscheduler.application.service.twitter;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTweetRequest;
 import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTweetResponse;
+import com.mastercloudapps.twitterscheduler.configuration.TwitterConfiguration;
 import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 
 import twitter4j.Status;
@@ -17,8 +16,6 @@ import twitter4j.StatusUpdate;
 
 @Component
 public class TwitterServiceImpl implements TwitterService {
-
-	private static Logger logger = LoggerFactory.getLogger(TwitterServiceImpl.class);
 	
 	@Value("${twitter.oauth.consumerKey}")
 	private String consumerKey;
@@ -33,35 +30,22 @@ public class TwitterServiceImpl implements TwitterService {
 	private String accessTokenSecret;
 
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
-	
-//	private Twitter twitter;
 
 	@Autowired
-	private TwitterClient client;
+	private TwitterConfiguration twitter;
 	
-	public TwitterServiceImpl(TwitterClient client) {
+	public TwitterServiceImpl(TwitterConfiguration twitter) {
 		
-		this.client = client;
+		this.twitter = twitter;
 	}
-	
-//	TwitterServiceImpl(TwitterClient twitter){
-//
-//		this.twitter = new TwitterClient();
-//	}
-	
+		
 	@Override
 	public Optional<PublishTweetResponse> publish(PublishTweetRequest request) {
 		
 		try {
-//		    logger.info("AccessToken --> " + accessToken);
-//		    logger.info("AccessTokenSecret --> " + accessTokenSecret);
-//		    logger.info("ConsumerKey --> " + consumerKey);
-//		    logger.info("ConsumerSecret --> " + consumerSecret);
-//		    logger.info("debug --> " + debug);
-		    
 			
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
-			Status status = this.client.getAuthClient().updateStatus(statusUpdate);
+			Status status = this.twitter.getClient().updateStatus(statusUpdate);
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())

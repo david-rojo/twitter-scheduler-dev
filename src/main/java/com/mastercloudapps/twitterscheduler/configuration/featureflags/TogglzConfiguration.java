@@ -33,7 +33,6 @@ public class TogglzConfiguration implements TogglzConfig {
 	@Bean
 	public UserProvider getUserProvider() {
 
-
 		return new UserProvider() {
 			@Override
 			public FeatureUser getCurrentUser() {
