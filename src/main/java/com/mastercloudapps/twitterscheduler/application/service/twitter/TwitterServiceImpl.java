@@ -40,14 +40,11 @@ public class TwitterServiceImpl implements TwitterService {
 	
 //	private static Twitter twitter = TwitterFactory.getSingleton();
 
-	private Twitter twitter;
+	private TwitterClient twitter;
 	
-	public TwitterServiceImpl() {
-		this(TwitterFactory.getSingleton());
-		//this(TwitterClient.getTwitterInstance());
-	}
+	public TwitterServiceImpl() {}
 	
-	TwitterServiceImpl(Twitter twitter){
+	TwitterServiceImpl(TwitterClient twitter){
 
 		this.twitter = twitter;
 	}
@@ -62,8 +59,9 @@ public class TwitterServiceImpl implements TwitterService {
 //		    logger.info("ConsumerSecret --> " + consumerSecret);
 //		    logger.info("debug --> " + debug);
 		    
+			
 			StatusUpdate statusUpdate = new StatusUpdate(request.getMessage());
-			Status status = twitter.updateStatus(statusUpdate);
+			Status status = twitter.getAuthClient().updateStatus(statusUpdate);
 			
 			PublishTweetResponse response = PublishTweetResponse.builder()
 					.id(status.getId())
