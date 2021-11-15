@@ -21,6 +21,8 @@ import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 @EnableAsync
 public class TweetPublisherTask {
 
+	//TODO use spring profiles to run only in PRO
+	
 	private static final String ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION = "Error executing TweetPublisherTask ";
 	
 	private static Logger logger = LoggerFactory.getLogger(TweetPublisherTask.class);
