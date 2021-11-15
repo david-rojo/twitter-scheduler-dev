@@ -13,8 +13,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.togglz.core.manager.FeatureManager;
 
-import com.mastercloudapps.twitterscheduler.application.service.task.TweetPublisherTask;
 import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
+import com.mastercloudapps.twitterscheduler.controller.TweetPublisherTask;
 
 @SpringJUnitConfig(TweetPublisherTask.class)
 public class ScheduledAwaitilityIntegrationTest {
