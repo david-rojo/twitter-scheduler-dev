@@ -2,7 +2,6 @@ package com.mastercloudapps.twitterscheduler.controller.pending.mapper;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.Instant;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;

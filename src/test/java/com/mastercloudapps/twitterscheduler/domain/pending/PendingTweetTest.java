@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.mastercloudapps.twitterscheduler.controller.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 

@@ -3,7 +3,6 @@ package com.mastercloudapps.twitterscheduler.application.service.twitter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTweetRequest;
@@ -17,18 +16,6 @@ import twitter4j.StatusUpdate;
 @Component
 public class TwitterServiceImpl implements TwitterService {
 	
-	@Value("${twitter.oauth.consumerKey}")
-	private String consumerKey;
-	
-	@Value("${twitter.oauth.consumerSecret}")
-	private String consumerSecret;
-	
-	@Value("${twitter.oauth.accessToken}")
-	private String accessToken;
-	
-	@Value("${twitter.oauth.accessTokenSecret}")
-	private String accessTokenSecret;
-
 	private static final String ERR_MSG_PUBLISH_TWEET = "Error publishing in Twitter";
 
 	@Autowired
