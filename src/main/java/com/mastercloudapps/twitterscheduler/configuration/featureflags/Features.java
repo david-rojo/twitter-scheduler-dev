@@ -9,8 +9,5 @@ public enum Features implements Feature {
 	@EnabledByDefault
 	@Label("Scheduler")
 	SCHEDULER,
-	
-	@EnabledByDefault
-	@Label("Publish on demand")
-	PUBLISH_ON_DEMAND
+
 }
