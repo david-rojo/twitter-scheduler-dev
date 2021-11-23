@@ -94,9 +94,11 @@ public class PublisherService implements PublishPendingTweetsUseCase, PublishPen
 					.message(pending.get().message().message())
 					.build());
 
-			logger.info("Successful on demand publication for pending tweet with id = " + pending.get().id().id());
 			if (publishedTweet.isPresent()) {
-
+				
+				logger.info("Successful on demand publication for pending tweet with id = " + pending.get().id().id()
+						+ "tweetId is " + publishedTweet.get().getId());
+				
 				pendingTweetPort.delete(pending.get().id().id());
 
 				final var tweet = tweetPort.create(Tweet.builder()
