@@ -3,8 +3,6 @@ package com.mastercloudapps.twitterscheduler.controller;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -37,8 +35,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @RequestMapping("api/pending")
 @SecurityRequirement(name = "twitter-scheduler")
 public class PendingApiController implements PendingApi {
-
-	private static Logger logger = LoggerFactory.getLogger(PendingApiController.class);
 
 	private final CreatePendingTweetRequestMapper createPendingTweetRequestMapper;
 
@@ -143,10 +139,8 @@ public class PendingApiController implements PendingApi {
 				.publishImmediatly(operation);
 
 		if (useCaseResponse.isPresent()) {
-			logger.info("The id of the use case response is " + useCaseResponse.get().id().id());
 			final var controllerResponse = publishOnDemandResponseMapper
 					.mapResponse(useCaseResponse.get());
-			logger.info("The id of the controller response is " + controllerResponse.getTweetId());
 			return new ResponseEntity<>(controllerResponse, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
