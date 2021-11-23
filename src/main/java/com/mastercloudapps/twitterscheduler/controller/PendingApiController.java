@@ -21,6 +21,7 @@ import com.mastercloudapps.twitterscheduler.application.usecase.CreatePendingTwe
 import com.mastercloudapps.twitterscheduler.application.usecase.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetOnDemandUseCase;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
@@ -30,6 +31,7 @@ import com.mastercloudapps.twitterscheduler.controller.pending.mapper.DeletePend
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.FindOnePendingTweetRequestMapper;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PendingTweetResponseMapper;
 import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PublishOnDemandResponseMapper;
+import com.mastercloudapps.twitterscheduler.controller.pending.mapper.PublishPendingTweetOnDemandRequestMapper;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -60,6 +62,10 @@ public class PendingApiController implements PendingApi {
 	
 	private final PublishOnDemandResponseMapper publishOnDemandResponseMapper;
 	
+	private final PublishPendingTweetOnDemandRequestMapper publishPendingTweetOnDemandRequestMapper;
+	
+	private final PublishPendingTweetOnDemandUseCase publishPendingTweetOnDemandUseCase;
+	
 	@Autowired
 	public PendingApiController(
 			final FeatureManager featureManager,
@@ -71,7 +77,9 @@ public class PendingApiController implements PendingApi {
 			final FindAllPendingTweetUseCase findAllPendingTweetUseCase,
 			final FindOnePendingTweetUseCase findOnePendingTweetUseCase,
 			final FindOnePendingTweetRequestMapper findOnePendingTweetRequestMapper,
-			final PublishOnDemandResponseMapper publishOnDemandResponseMapper) {
+			final PublishOnDemandResponseMapper publishOnDemandResponseMapper,
+			final PublishPendingTweetOnDemandRequestMapper publishPendingTweetOnDemandRequestMapper,
+			final PublishPendingTweetOnDemandUseCase publishPendingTweetOnDemandUseCase) {
 		
 		this.createPendingTweetRequestMapper = createPendingTweetRequestMapper;
 		this.pendingResponseMapper = responseMapper;
@@ -83,6 +91,8 @@ public class PendingApiController implements PendingApi {
 		this.findOnePendingTweetRequestMapper = findOnePendingTweetRequestMapper;
 		this.featureManager = featureManager;
 		this.publishOnDemandResponseMapper = publishOnDemandResponseMapper;
+		this.publishPendingTweetOnDemandRequestMapper = publishPendingTweetOnDemandRequestMapper;
+		this.publishPendingTweetOnDemandUseCase = publishPendingTweetOnDemandUseCase;
 	}
 	
 	@GetMapping
@@ -134,13 +144,23 @@ public class PendingApiController implements PendingApi {
 	public ResponseEntity<PublishOnDemandResponse> publishOnDemand(Long id) {
 		
 		if (!featureManager.isActive(Features.PUBLISH_ON_DEMAND)) {
-			logger.info("Publish on demand feature is disabled because it is not implemented yet");
+			logger.info("Publish on demand feature is disabled");
+			return new ResponseEntity<>(null, HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		else {
-			logger.info("Publish on demand feature enabled but not implemented yet");
+			
+			final var operation = publishPendingTweetOnDemandRequestMapper.mapRequest(id);
+			
+			final var useCaseResponse = publishPendingTweetOnDemandUseCase
+					.publishImmediatly(operation);
+			
+			if (useCaseResponse.isPresent()) {
+				return new ResponseEntity<>(publishOnDemandResponseMapper
+						.mapResponse(useCaseResponse.get()), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
 		}
-		return new ResponseEntity<>(publishOnDemandResponseMapper.getNotAllowedResponse(),
-				HttpStatus.METHOD_NOT_ALLOWED);
 	}
 	
 }
