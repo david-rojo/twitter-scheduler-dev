@@ -1,12 +1,14 @@
 package com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending;
 
 import java.time.Instant;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -32,5 +34,8 @@ public class PendingTweetJpaEntity {
 	private Instant publicationDate;
 	
 	private Instant createdAt;
+	
+	@OneToMany(mappedBy="pendingTweet")
+    private Collection<PendingImageJpaEntity> images;
 	
 }
