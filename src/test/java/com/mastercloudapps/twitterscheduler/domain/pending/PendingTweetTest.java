@@ -1,6 +1,7 @@
 package com.mastercloudapps.twitterscheduler.domain.pending;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -108,7 +110,6 @@ class PendingTweetTest {
 		@DisplayName("Test creation with domain errors, expected customized domain exceptions")
 		void testDomainExceptions() {
 			assertThrows(MessageMaxLengthExceededException.class, () -> createPendingTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));
-			//assertThrows(ExpiredPublicationDateException.class, () -> createPendingTweet(MockData.INVALID_EXPIRED_PUBLICATION_DATE));
 		}
 	}
 	
@@ -177,5 +178,55 @@ class PendingTweetTest {
 	      assertThat(pendingTweet, is(not(other)));
 	      assertThat(pendingTweet.hashCode(), is(not(other.hashCode())));
 	    }
+	  }
+	  
+	  @Nested
+	  @DisplayName("Test images list")
+	  class TestPlanAssociationsList {
+
+		  private PendingTweet pendingTweet;
+
+		  private PendingTweetImage image;
+
+		  @BeforeEach
+		  void setUp() {
+			  pendingTweet = createPendingTweet(MockData.VALID);
+			  image = PendingTweetImage.builder()
+					  .id(1L)
+					  .url("abc")
+					  .build();
+		  }
+
+		  @Test
+		  @DisplayName("Add image, expect contained in images list.")
+		  void testAddImage() {
+			  pendingTweet.addImages(image);
+			  assertThat(pendingTweet.getImages().contains(image), is(true));
+		  }
+
+		  @Test
+		  @DisplayName("Add image list, expect contained in images list.")
+		  void testAddImagesList() {
+			  pendingTweet.addImages(List.of(image));
+			  assertThat(pendingTweet.getImages().contains(image), is(true));
+		  }
+
+		  @Test
+		  @DisplayName("Remove all images, expect images empty.")
+		  void testRemoveAllImages() {
+			  pendingTweet.addImages(image);
+			  assertThat(pendingTweet.getImages(), is(not(empty())));
+			  pendingTweet.deleteImages();
+			  assertThat(pendingTweet.getImages(), is(empty()));
+		  }
+
+		  @Test
+		  @DisplayName("Remove an image, expect not present in images list.")
+		  void testRemoveImage() {
+			  pendingTweet.addImages(image);
+			  assertThat(pendingTweet.getImages(), is(not(empty())));
+			  pendingTweet.deleteImages(image);
+			  assertThat(pendingTweet.getImages().contains(image), is(false));
+		  }
 	  }
 }
