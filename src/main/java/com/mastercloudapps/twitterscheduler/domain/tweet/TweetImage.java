@@ -53,7 +53,7 @@ public class TweetImage extends Entity<TweetImageId> {
 	
 	public interface SizeStep {
 
-		TypeStep size(Integer size);
+		TypeStep size(Long size);
 	}
 	
 	public interface TypeStep {
@@ -95,7 +95,7 @@ public class TweetImage extends Entity<TweetImageId> {
 		}
 		
 		@Override
-		public TypeStep size(Integer size) {
+		public TypeStep size(Long size) {
 			this.size = Size.valueOf(requireNonNull(size, "Size cannot be null."));
 			return this;
 		}

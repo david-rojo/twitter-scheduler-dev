@@ -3,8 +3,10 @@ package com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending;
 import java.time.Instant;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +37,7 @@ public class PendingTweetJpaEntity {
 	
 	private Instant createdAt;
 	
-	@OneToMany(mappedBy="pendingTweet")
-    private Collection<PendingImageJpaEntity> images;
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="pendingTweet", fetch = FetchType.EAGER)
+    private Collection<PendingTweetImageJpaEntity> images;
 	
 }

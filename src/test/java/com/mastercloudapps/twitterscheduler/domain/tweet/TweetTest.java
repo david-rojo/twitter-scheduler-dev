@@ -269,7 +269,7 @@ class TweetTest {
 			  tweet = createTweet(MockData.VALID);
 			  image = TweetImage.builder()
 					  .id(1L)
-					  .size(300)
+					  .size(300L)
 					  .type("image/jpeg")
 					  .width(100)
 					  .height(100)

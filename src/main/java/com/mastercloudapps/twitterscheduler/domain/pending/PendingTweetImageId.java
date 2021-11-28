@@ -8,6 +8,8 @@ public class PendingTweetImageId extends DomainObjectId<Long> {
 
 	private static final long serialVersionUID = -3692626899655506192L;
 	
+	private static final Long DEFAULT_VALUE = Long.MAX_VALUE;
+	
 	public PendingTweetImageId(Long id) {
 		super(id);
 	}
@@ -36,6 +38,10 @@ public class PendingTweetImageId extends DomainObjectId<Long> {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public static Long defaultValue() {
+		return DEFAULT_VALUE;
 	}
 
 }

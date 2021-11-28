@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @Table(name="PENDING_IMAGE")
-public class PendingImageJpaEntity {
+public class PendingTweetImageJpaEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

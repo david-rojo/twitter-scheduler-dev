@@ -2,8 +2,6 @@ package com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,10 +21,9 @@ import lombok.NoArgsConstructor;
 public class TweetImageJpaEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Integer size;
+	private Long size;
 	
 	@Column(columnDefinition="TEXT")
 	private String type;

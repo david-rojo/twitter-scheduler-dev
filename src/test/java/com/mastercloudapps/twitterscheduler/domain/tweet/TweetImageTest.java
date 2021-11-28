@@ -28,19 +28,19 @@ class TweetImageTest {
 	enum MockData {
 		VALID(
 				1L,
-				300,
+				300L,
 				"image/jpeg",
 				100,
 				100),
 		VALID_OTHER_DIFFERENT_ID(
 				2L,
-				400,
+				400L,
 				"image/png",
 				200,
 				200),
 		INVALID_NULL_ID(
 				null, 
-				400,
+				400L,
 				"image/png",
 				200,
 				200),
@@ -52,26 +52,26 @@ class TweetImageTest {
 				100),
 		INVALID_NULL_TYPE(
 				4L,
-				200,
+				200L,
 				null,
 				100,
 				100),
 		INVALID_NULL_WIDTH(
 				5L,
-				180,
+				180L,
 				"image/jpeg",
 				null,
 				100),
 		INVALID_NULL_HEIGHT(
 				6L,
-				389,
+				389L,
 				"image/jpeg",
 				100,
 				null);
 
 		private final Long tweetImageId;
 
-		private final Integer size;
+		private final Long size;
 		
 		private final String type;
 		
@@ -79,7 +79,7 @@ class TweetImageTest {
 		
 		private final Integer height;
 
-		MockData(final Long tweetImageId, final Integer size, final String type, final Integer width,
+		MockData(final Long tweetImageId, final Long size, final String type, final Integer width,
 				final Integer height) {
 			this.tweetImageId = tweetImageId;
 			this.size = size;

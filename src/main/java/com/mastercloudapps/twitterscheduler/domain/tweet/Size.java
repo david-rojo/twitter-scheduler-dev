@@ -10,17 +10,17 @@ public class Size implements ValueObject {
 
 	private static final long serialVersionUID = -6422141827884275696L;
 	
-	private final Integer size;
+	private final Long size;
 
-	private Size(final Integer size) {
+	private Size(final Long size) {
 		this.size = requireNonNull(size, "Size cannot be null.");
 	}
 
-	public static Size valueOf(final Integer size) {
+	public static Size valueOf(final Long size) {
 		return new Size(size);
 	}
 
-	public Integer size() {
+	public Long size() {
 		return size;
 	}
 
