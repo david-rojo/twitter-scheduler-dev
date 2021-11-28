@@ -5,6 +5,7 @@ import java.time.Instant;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 
 public enum PendingTweetData {
+
 	HAPPY_NEW_YEAR(
 			1L,
 			"Happy new year!",

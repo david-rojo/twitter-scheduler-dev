@@ -21,8 +21,7 @@ import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.mocks.SchedulerInfoData;
 
 @ExtendWith(MockitoExtension.class)
-
-public class SchedulerServiceTest {
+class SchedulerServiceTest {
 
 	private SchedulerService service;
 
