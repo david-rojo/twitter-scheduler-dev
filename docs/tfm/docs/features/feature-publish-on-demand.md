@@ -310,4 +310,6 @@ Tests:
 
 ## Commits
 
-![on-demand-commits](../images/feature-on-demand/commits-on-demand.png)
+As it is shown, per each commit in `main` branch, a new deployment in heroku has been done:
+
+![on-demand-commits](../images/feature-on-demand/github-commits-heroku-deployments-on-demand.png)
