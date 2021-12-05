@@ -3,6 +3,6 @@
 
 ![][TwitterScheduler Logo]
 
-# TwitterScheduler
+# Twitter Scheduler
 
 [TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.png
