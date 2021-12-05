@@ -7,11 +7,19 @@
 
 This project was born as a Master's Dissertation
 
+- [Application deployed](#application-deployed)
+- [Initial implementation](#initial-implementation)
 - [Features](#features)
 - [Additional resources](#additional-resources)
 - [Contact](#contact)
 
 ---
+
+## Application deployed
+
+![][TwitterScheduler App]
+
+## Initial implementation
 
 ## Features
 
@@ -30,3 +38,4 @@ Following additional resources are available:
 Twitter: [@davidrojoa](https://twitter.com/davidrojoa)
 
 [TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.png
+[TwitterScheduler App]: docs/images/twitter-scheduler-pro.png

@@ -1,5 +1,12 @@
 # Feature: tweets with images
 
+- [Feature requisites](#feature-requisites)
+- [How feature is implemented](#how-feature-is-implemented)
+- [Implementation steps](#implementation-steps)
+- [Commits](#commits)
+
+---
+
 ## Add new feature toggle disabled
 
 On `Features.java` add new feature toggle:
