@@ -1,6 +1,7 @@
 # Feature: publish on demand
 
-- [Commits](#commits)
+- [Feature requisites](#feature-requisites)
+- [How feature is implemented](#how-feature-is-implemented)
 - Steps:
   - [Add new feature toggle disabled](#add-new-feature-toggle-disabled)
   - [Add V2 flyway script](#add-v2-flyway-script)
@@ -13,11 +14,32 @@
   - [Enable feature toggle](#enable-feature-toggle)
   - [Show method in OpenApi](#show-method-in-openapi)
   - [Remove feature toggle](#remove-feature-toggle)
+- [Commits](#commits)
 
 ---
-## Commits
 
-![on-demand-commits](../images/feature-on-demand/commits-on-demand.png)
+## Feature requisites
+
+Is requested to provide a way to publish immediatly created Pending Tweets on demand
+
+## How feature is impllemented
+
+In order to complete this feature, is needed to modify the **domain** of the application, adding new value object to Tweet aggregate root:
+
+![domain-on-demand](../images/feature-on-demand/domain-publish-on-demand.png)
+
+This new attribute can have two different values:
+
+- `ON_DEMAND`: If the publication of the tweet has been forced.
+- `SCHEDULED`: If the publication of the tweet has been, when it was planned.
+
+This also changes the **database** adding a new column to TWEET table:
+
+![db-on-demand](../images/feature-on-demand/db-publish-on-demand.png)
+
+To be able to publish on demand a pending tweet, a new endpoint is added to REST API:
+
+![on-demand-rest-method](../images/feature-on-demand/publish-on-demand-rest-method.png)
 
 ## Add new feature toggle disabled
 
@@ -268,7 +290,6 @@ Remove `@Hidden` annotation from REST endpoint:
         @ApiResponse(responseCode = "405", description = "Feature in progress") })
 	public ResponseEntity<PublishOnDemandResponse> publishOnDemand(@PathVariable Long id);
 ```
-![on-demand-rest-method](../images/feature-on-demand/publish-on-demand-rest-method.png)
 
 Tests:
  - to enable/disable (405 code when feature toggle disabled)
@@ -281,3 +302,7 @@ Tests:
 - Remove check feature toggle in pendingApiController
 - Remove featureManager attribute in pendingApiController
 - Remove featureManager attribute in pendingApiControllerTest
+
+## Commits
+
+![on-demand-commits](../images/feature-on-demand/commits-on-demand.png)

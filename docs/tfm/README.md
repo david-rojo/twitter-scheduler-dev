@@ -5,4 +5,21 @@
 
 # Twitter Scheduler
 
+- [Features](#features)
+- [Additional resources](#additional-resources)
+
+---
+
+### Features
+
+- [Publish on demand](docs/features/feature-publish-on-demand.md)
+- [Tweets with images](docs/features/feature-tweets-with-images.md)
+
+### Additional resources
+
+This project was born as a Master's Dissertation. Additional resources available:
+
+* 📖 Essay (Spanish)
+* 🖼 Slides (Spanish)
+
 [TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.png
