@@ -17,4 +17,4 @@ Heroku info endpoint: [https://twitter-scheduler-tfm.herokuapp.com/actuator/info
 
 Heroku info endpoint: [https://twitter-scheduler-tfm-dev.herokuapp.com/actuator/info](https://twitter-scheduler-tfm-dev.herokuapp.com/actuator/info)
 
-[TwitterScheduler Logo]: doc/images/twitter-scheduler-logo.jpg
+[TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.jpg
