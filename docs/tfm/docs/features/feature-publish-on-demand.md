@@ -2,18 +2,7 @@
 
 - [Feature requisites](#feature-requisites)
 - [How feature is implemented](#how-feature-is-implemented)
-- Steps:
-  - [Add new feature toggle disabled](#add-new-feature-toggle-disabled)
-  - [Add V2 flyway script](#add-v2-flyway-script)
-  - [Add REST endpoint to controller but returning 405 and hide it from OpenApi documentation](#add-rest-endpoint-to-controller-but-returning-405-and-hide-it-from-openapi-documentation)
-  - [Add publicationType to JPA Tweet entity](#add-publicationtype-to-jpa-tweet-entity)
-  - [Add publicationType to domain and adapt current implementation](#add-publicationtype-to-domain-and-adapt-current-implementation)
-  - [Add PublishPendingTweetOnDemand useCase definition](#add-publishpendingtweetondemand-usecase-definition)
-  - [Add PublishPendingTweetOnDemand service implementation](#add-publishpendingtweetondemand-service-implementation)
-  - [Add publicationType to controller](#add-publicationtype-to-controller)
-  - [Enable feature toggle](#enable-feature-toggle)
-  - [Show method in OpenApi](#show-method-in-openapi)
-  - [Remove feature toggle](#remove-feature-toggle)
+- [Implementation steps](#implementation-steps)
 - [Commits](#commits)
 
 ---
@@ -41,7 +30,23 @@ To be able to publish on demand a pending tweet, a new endpoint is added to REST
 
 ![on-demand-rest-method](../images/feature-on-demand/publish-on-demand-rest-method.png)
 
-## Add new feature toggle disabled
+## Implementation steps
+
+Following steps has been achieved to implement current feature:
+
+- [Add new feature toggle disabled](#add-new-feature-toggle-disabled)
+- [Add V2 flyway script](#add-v2-flyway-script)
+- [Add REST endpoint to controller but returning 405 and hide it from OpenApi documentation](#add-rest-endpoint-to-controller-but-returning-405-and-hide-it-from-openapi-documentation)
+- [Add publicationType to JPA Tweet entity](#add-publicationtype-to-jpa-tweet-entity)
+- [Add publicationType to domain and adapt current implementation](#add-publicationtype-to-domain-and-adapt-current-implementation)
+- [Add PublishPendingTweetOnDemand useCase definition](#add-publishpendingtweetondemand-usecase-definition)
+- [Add PublishPendingTweetOnDemand service implementation](#add-publishpendingtweetondemand-service-implementation)
+- [Add publicationType to controller](#add-publicationtype-to-controller)
+- [Enable feature toggle](#enable-feature-toggle)
+- [Show method in OpenApi](#show-method-in-openapi)
+- [Remove feature toggle](#remove-feature-toggle)
+
+### Add new feature toggle disabled
 
 On `Features.java` add new feature toggle:
 
@@ -54,7 +59,7 @@ It is disabled by default
 
 ![on-demand-disabled](../images/feature-on-demand/publish-on-demand-togglz-disabled.png)
 
-## Add V2 flyway script
+### Add V2 flyway script
 
 Include script `V2__add_publication_type.sql` with new column and setting default value as `SCHEDULED`
 
@@ -63,7 +68,7 @@ ALTER TABLE TWEET
 ADD PUBLICATION_TYPE varchar(255) DEFAULT 'SCHEDULED' NOT NULL
 ```
 
-## Add REST endpoint to controller but returning 405 and hide it from OpenApi documentation
+### Add REST endpoint to controller but returning 405 and hide it from OpenApi documentation
 
 As it is described [here](https://www.baeldung.com/spring-swagger-hiding-endpoints#hiding-an-endpoint-with-hidden), any REST method can be hidden using `@Hidden` annotation when OpenApi v3 is used:
 
@@ -92,7 +97,7 @@ Tests added:
     - PendingApiControllerTest.publishOnDemandPendingTweetTest() (unitary)
     - PendingApiControllerIT.publishOnDemandPendingTweetTest() (integration)
 
-## Add publicationType to JPA Tweet entity
+### Add publicationType to JPA Tweet entity
 
 Publication type has two possible values: SCHEDULED and ON_DEMAND, so best choice to model it is using an enum that later will be used in domain:
 
@@ -111,7 +116,7 @@ As it is described [here](https://www.baeldung.com/jpa-persisting-enums-in-jpa#s
 	private PublicationType publicationType;
 ```
 
-## Add publicationType to domain and adapt current implementation
+### Add publicationType to domain and adapt current implementation
 
 Add new attribute in Tweet class:
 
@@ -146,7 +151,7 @@ Add publicationType to TweetResponse as attribute and also to TweetResponseMappe
 	}
 ```
 
-## Add PublishPendingTweetOnDemand useCase definition
+### Add PublishPendingTweetOnDemand useCase definition
 
 ```
 public interface PublishPendingTweetOnDemandUseCase {
@@ -155,7 +160,7 @@ public interface PublishPendingTweetOnDemandUseCase {
 }
 ```
 
-## Add PublishPendingTweetOnDemand service implementation
+### Add PublishPendingTweetOnDemand service implementation
 
 Implement service in PublisherService
 
@@ -194,7 +199,7 @@ Implement service in PublisherService
 	}
 ```
 
-## Add publicationType to controller
+### Add publicationType to controller
 
 Controller implementation:
 
@@ -260,7 +265,7 @@ Unitary tests:
 		.andExpect(jsonPath("$.tweetId", equalTo(Math.toIntExact(onDemandTweet.id().id()))));
 	}
 ```
-## Enable feature toggle
+### Enable feature toggle
 
 In Features enum, include @EnabledByDefault annotation for PUBLISH_ON_DEMAND feature:
 
@@ -274,7 +279,7 @@ In Features enum, include @EnabledByDefault annotation for PUBLISH_ON_DEMAND fea
 
 Delete IT that check that publishOnDemand return 405 httpCode
 
-## Show method in OpenApi
+### Show method in OpenApi
 
 Remove `@Hidden` annotation from REST endpoint:
 
@@ -296,7 +301,7 @@ Tests:
  - try to publish an not existing pending tweet id (404)
  - try to publish an existing pending tweet id (200)
 
-## Remove feature toggle
+### Remove feature toggle
 
 - Remove PUBLISH_ON_DEMAND feature toggle in Features enum
 - Remove check feature toggle in pendingApiController
