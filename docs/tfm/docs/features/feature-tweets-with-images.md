@@ -7,6 +7,24 @@
 
 ---
 
+## Feature requisites
+
+Is requested to provide the possibility of the tweets that is going to be published, they can have as additional content one or more images.
+
+Is needed to provide the url where the image is available
+
+## How feature is implemented
+
+In order to complete this feature, is needed to modify the **domain** of the application, adding two new entities to Pending Tweet and Tweet agreggate roots:
+
+![domain-tweet-images](../images/feature-tweet-images/domain-tweet-images.png)
+
+This also changes the **database** adding two new tables: PENDING_IMAGE and TWEET_IMAGE, both with a foreign key related to PENDING_TWEET and TWEET respectively:
+
+![db-tweet-images](../images/feature-tweet-images/db-tweet-images.png)
+
+## Implementation steps
+
 ## Add new feature toggle disabled
 
 On `Features.java` add new feature toggle:
