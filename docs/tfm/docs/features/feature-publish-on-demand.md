@@ -22,7 +22,7 @@
 
 Is requested to provide a way to publish immediatly created Pending Tweets on demand
 
-## How feature is impllemented
+## How feature is implemented
 
 In order to complete this feature, is needed to modify the **domain** of the application, adding new value object to Tweet aggregate root:
 
