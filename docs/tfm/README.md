@@ -5,21 +5,28 @@
 
 # Twitter Scheduler
 
+This project was born as a Master's Dissertation
+
 - [Features](#features)
 - [Additional resources](#additional-resources)
+- [Contact](#contact)
 
 ---
 
-### Features
+## Features
 
 - [Publish on demand](docs/features/feature-publish-on-demand.md)
 - [Tweets with images](docs/features/feature-tweets-with-images.md)
 
-### Additional resources
+## Additional resources
 
-This project was born as a Master's Dissertation. Additional resources available:
+Following additional resources are available:
 
 * 📖 Essay (Spanish)
 * 🖼 Slides (Spanish)
+
+## Contact
+
+Twitter: [@davidrojoa](https://twitter.com/davidrojoa)
 
 [TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.png
