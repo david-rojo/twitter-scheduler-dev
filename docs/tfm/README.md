@@ -9,7 +9,7 @@ This project was born as a Master's Dissertation, it is based in the implementat
 
 Application has been implemented with Java 11 using Spring Boot and following a hexagonal architecture applying Domain Driven Design, it provides the capacity to schedule the publication of tweets in [Twitter](https://twitter.com/) social network in this account: [BlueOcean_TFM](https://twitter.com/BlueOcean_TFM)
 
-On every commit, a GitHub actions workflow is executed, running unitary and integration tests and publishing the docker image in [DockerHub repository](https://hub.docker.com/repository/docker/drojo/twitter-scheduler-tfm) and deploying the application in [Heroku](https://twitter-scheduler-tfm.herokuapp.com/) (credentials needed), also a pair of smoke tests are executed in order to confirm that the application has been successfully deployed.
+On every commit, a GitHub actions workflow is executed, running unitary and integration tests, publishing the docker image in [DockerHub repository](https://hub.docker.com/repository/docker/drojo/twitter-scheduler-tfm) and deploying the application in [Heroku](https://twitter-scheduler-tfm.herokuapp.com/) (credentials needed), also a pair of smoke tests are executed in order to confirm that the application has been successfully deployed.
 
 ![][TwitterScheduler App]
 
