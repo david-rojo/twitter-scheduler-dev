@@ -15,7 +15,7 @@ On every commit, a GitHub actions workflow is executed, running unitary and inte
 
 Sections:
 
-- [Continuous integration/Continuous Deployment]()
+- [Continuous integration/Continuous Deployment](docs/ci-cd.md)
 - [Initial implementation](docs/initial-implementation.md)
 - Features:
   - [Publish on demand](docs/features/feature-publish-on-demand.md)
