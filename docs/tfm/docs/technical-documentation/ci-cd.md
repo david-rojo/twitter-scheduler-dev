@@ -35,8 +35,8 @@ Following secrets are needed to be created in order that workflow could be succe
 
 Is needed to create an application in Heroku and adding as resource a Heroku Postgres database, also is needed to create these **Config Vars**:
 
-- `API_USERNAME`: user for REST API and OpenApi access. Default value: `admin`
-- `API_PASSWORD`: password for REST API and OpenApi user. Default value: `admin1`
+- `API_USERNAME`: user for REST API and OpenApi access.
+- `API_PASSWORD`: password for REST API and OpenApi user.
 - `DB_URL`: database URL, it must have this format: `postgresql://<host>:<port>/<db_name>?user=<username>&password=<password>`
 - `DB_USERNAME`: database user
 - `DB_PASSWORD`: database password
