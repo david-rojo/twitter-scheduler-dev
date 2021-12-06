@@ -15,11 +15,11 @@ On every commit, a GitHub actions workflow is executed, running unitary and inte
 
 Sections:
 
-- [Continuous integration/Continuous Deployment](docs/ci-cd.md)
-- [Initial implementation](docs/initial-implementation.md)
+- [Continuous integration/Continuous Deployment](docs/technical-documentation/ci-cd.md)
+- [Initial implementation](docs/technical-documentation/initial-implementation.md)
 - Features:
-  - [Publish on demand](docs/features/feature-publish-on-demand.md)
-  - [Tweets with images](docs/features/feature-tweets-with-images.md)
+  - [Publish on demand](docs/technical-documentation/features/feature-publish-on-demand.md)
+  - [Tweets with images](docs/technical-documentation/features/feature-tweets-with-images.md)
 
 Following additional resources are available:
 
